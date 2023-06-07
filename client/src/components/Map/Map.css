@@ -1,0 +1,15 @@
+.map {
+    height: 100%;
+    width: 100%;
+  
+    /* margin: 30px; */
+}
+.mainbodyforMap {
+    background-color: white;
+    height: 65%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 50px;
+    
+}
