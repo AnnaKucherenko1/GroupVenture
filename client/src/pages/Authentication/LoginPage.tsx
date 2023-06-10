@@ -1,5 +1,5 @@
 
-import React, { useState, ChangeEvent, FormEvent} from "react";
+import React, { useState, ChangeEvent, FormEvent, createContext, useContext} from "react";
 import {
     MDBBtn,
     MDBContainer,
@@ -10,10 +10,12 @@ import {
   }
   from 'mdb-react-ui-kit';
   import { useNavigate } from "react-router-dom";
-  
+import { login } from "../../Services/serviceUser";
+import { UserProvider, UserContext } from "../../UserContext";
 
-export default function Login () {
+export default function LoginPage () {
     const navigate = useNavigate();
+    const { setUser } = useContext(UserContext);
     const [formData, setFormData] = useState({
         email: '',
         password: ''
@@ -25,31 +27,39 @@ export default function Login () {
         });
       };
     
-      const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+      const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log(formData); 
-        //TODO:
-        // Add code to make an API request to the backend here
+        try {
+          const response = await login(formData);
+          setUser(response.data);
+          navigate(`/profile/${response.data}`);
+        } catch (error) {
+          alert("Incorrect email or password");
+        }
         setFormData({
             email: '',
             password: ''
           })
         //  TODO navigate(`/profile/${id}`);
-        navigate(`/profile`);
       };
       const handleRegisterClick = () => {
         navigate("/signup");
       };
     
     return (
+      <UserProvider>
         <MDBContainer fluid>
           <MDBRow>
     
             <MDBCol sm='6'>
     
               <div className='d-flex flex-row ps-5 pt-5'>
-                {/* <MDBIcon fas icon="crow fa-3x me-3" style={{ color: '#709085' }}/>
-                <span className="h1 fw-bold mb-0">Logo</span> */}
+                {/* <MDBIcon fas icon="/logo.png" style={{ color: '#709085' }}/> */}
+                {/* <MDBCol sm='2' className='d-none d-sm-block px-0'>
+              <img src="logo2.png"
+                alt="Logo image" className="w-100" />
+            </MDBCol> */}
+                <span className="h1 fw-bold mb-0">GroupVenture</span>
               </div>
     
               <div className='d-flex flex-column justify-content-center h-custom-2 w-75 pt-4'>
@@ -79,5 +89,6 @@ export default function Login () {
           </MDBRow>
     
         </MDBContainer>
+        </UserProvider>
       );
 }

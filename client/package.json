@@ -4,7 +4,9 @@
   "private": true,
   "dependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.10",
+    "@chakra-ui/react": "^2.7.0",
     "@fortawesome/fontawesome-free": "^6.4.0",
+    "@react-google-maps/api": "^2.18.1",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -12,6 +14,9 @@
     "@types/node": "^16.18.34",
     "@types/react": "^18.2.8",
     "@types/react-dom": "^18.2.4",
+    "axios": "^1.4.0",
+    "cloudinary": "^1.37.1",
+    "google-map-react": "^2.2.1",
     "mdb-react-ui-kit": "^6.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -45,6 +50,9 @@
     ]
   },
   "devDependencies": {
-    "@types/mocha": "^10.0.1"
+    "@types/google-map-react": "^2.1.7",
+    "@types/googlemaps": "^3.43.3",
+    "@types/mocha": "^10.0.1",
+    "@types/react-datepicker": "^4.11.2"
   }
 }

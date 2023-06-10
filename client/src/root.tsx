@@ -4,10 +4,12 @@ import {
   Route,
   Routes,
 } from 'react-router-dom';
-import Home from './pages/Home';
-import LoginPage from './pages/LoginPage';
-import Profile from './pages/Profile';
-import Signup from './components/Login/Signup';
+import Home from './pages/Home/Home';
+import LoginPage from './pages/Authentication/LoginPage';
+import Profile from './pages/Profile/Profile';
+import SignupPage from './pages/Authentication/SignupPage';
+import AddActivityPage from './pages/AddActivityPage/AddActivityPage';
+
 
 const Root = () => {
   return (
@@ -23,11 +25,15 @@ const Root = () => {
         />
         <Route 
             path='/signup' 
-            element={<Signup />}
+            element={<SignupPage />}
         />
          <Route 
-            path='/profile' 
+            path='/profile/:id' 
             element={<Profile />}
+        />
+        <Route 
+            path='/addactivity' 
+            element={<AddActivityPage />}
         />
       </Routes>
 

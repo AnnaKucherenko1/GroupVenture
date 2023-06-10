@@ -1,0 +1,24 @@
+.mainDivForProfile {
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+}
+.profileBody{
+    height: 100%;
+}
+.profileAvatar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+  
+  .profileAvatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
