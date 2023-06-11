@@ -6,3 +6,11 @@
     border-radius: 10px;
     /* margin: 100px; */
 }
+p {
+    color: white
+}
+.testBlock{
+    margin-top: 50px;
+    color: white;
+    font-size: 25px
+}

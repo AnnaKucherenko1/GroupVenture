@@ -5,9 +5,10 @@ import { UserContext } from "../../UserContext";
 
 export default function NavBar () {
   const { user } = useContext(UserContext);
-return (
-<div className="navbar">
-<nav id="nav">
+
+  return (
+    <div className="navbar">
+      <nav id="nav">
         <li>
           <Link to="/">Home</Link>
         </li>
@@ -21,6 +22,6 @@ return (
           </li>
         )}
       </nav>
-        </div>
-)
+    </div>
+  );
 }

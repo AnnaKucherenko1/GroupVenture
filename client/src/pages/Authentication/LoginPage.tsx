@@ -42,6 +42,7 @@ export default function LoginPage () {
           })
         //  TODO navigate(`/profile/${id}`);
       };
+      
       const handleRegisterClick = () => {
         navigate("/signup");
       };

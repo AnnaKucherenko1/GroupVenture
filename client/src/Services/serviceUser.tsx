@@ -14,21 +14,27 @@ export const postUser = async (data: FormDataInterface) => {
   });
   return response.json();
 };
+
 export function getUserById(id: any) {
-    return fetch(root + 'profile/' + id).then((response) => {
+    return fetch(root + 'profile/' + id, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      mode: 'cors',
+    }).then((response) => {
       if (!response.ok) {
         throw new Error("User not found");
       }
       return response.json();
     });
-   
   }
-
 
   export function login(user: any) {
     return fetch(root + `login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      mode: 'cors',
       body: JSON.stringify(user),
     }).then((res) => {
       console.log(res)

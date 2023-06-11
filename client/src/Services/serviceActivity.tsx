@@ -1,9 +1,11 @@
+import { useContext } from "react";
 import { ActivityInterface } from "../pages/AddActivityPage/AddActivityPage";
 
 let root = "http://localhost:3333/";
-export const postActivity = async (data: ActivityInterface) => {
-  const userId = localStorage.getItem("userId");
-  const withId = Object.assign({createdBy: userId}, data);
+export const postActivity = async (data: ActivityInterface, user: any) => {
+  
+  // const userId = localStorage.getItem("userId");
+  const withId = Object.assign({createdBy: user}, data);
   const response = await fetch(root + 'addactivity', {
     method: "POST",
     headers: {
@@ -23,6 +25,7 @@ export function getActivities() {
     return response.json();
   });
 }
+
 export function getActivityById(id: any) {
   return fetch(root + id).then((response) => {
     if (!response.ok) {

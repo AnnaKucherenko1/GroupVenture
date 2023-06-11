@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FormEvent, useState, useRef, useEffect } from 'react';
+import React, { ChangeEvent, FormEvent, useState, useRef, useEffect, useContext } from 'react';
 import { useLoadScript } from '@react-google-maps/api';
 import { StandaloneSearchBox, Marker} from '@react-google-maps/api';
 // import './AddActivityPage.css'
@@ -13,6 +13,7 @@ import {
 } from 'mdb-react-ui-kit';
 import { Autocomplete } from '@react-google-maps/api';
 import { postActivity } from '../../Services/serviceActivity';
+import { UserContext } from '../../UserContext';
 
 export interface ActivityInterface {
    id?: string;
@@ -27,6 +28,7 @@ export interface ActivityInterface {
 }
 
 export default function AddActivityPage() {
+  const { user } = useContext(UserContext);
   const geocoder = new google.maps.Geocoder();
   const [markerPosition, setMarkerPosition] = useState<Coordinates | null>(null);
   const [mapCenter, setMapCenter] = useState<Coordinates>({
@@ -91,7 +93,7 @@ export default function AddActivityPage() {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    postActivity(formData)
+    postActivity(formData, user)
     setFormData({
       title: '',
       date: '',

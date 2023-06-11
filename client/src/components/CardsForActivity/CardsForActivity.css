@@ -1,5 +1,50 @@
 
-.card{
-border-radius: 50px;
-border: 1px solid red;
-}
+/* .card {
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+   */
+  .activity-details {
+    text-align: center;
+    margin-bottom: 16px;
+  }
+  
+  .activity-details h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
+  
+  .activity-details p {
+    font-size: 16px;
+    color: #666;
+  }
+  
+  .created-by a {
+    font-size: 14px;
+    text-decoration: none;
+  }
+  
+  .created-by a span {
+    color: blue;
+  }
+  .created-by a span:hover {
+    text-decoration: underline;
+  }
+  
+  .button-section {
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .button-section button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+  }
