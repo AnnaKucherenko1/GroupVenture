@@ -1,10 +1,4 @@
-import React, {
-  Dispatch,
-  SetStateAction,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import "./CardsForActivity.css";
 import {
   MDBCard,
@@ -59,10 +53,10 @@ interface Activity {
   UserActivityParticipations: string[];
 }
 
-const CardsForActivity: React.FC<CardsForActivityProps> = (
-  { marker, onClose },
-  { setMarkers }
-) => {
+const CardsForActivity: React.FC<CardsForActivityProps> = ({
+  marker,
+  onClose,
+}) => {
   const uid = useUID();
   const [isOpen, setIsOpen] = useState(true);
   const [occupiedSpots, setOccupiedSpots] = useState(0);
@@ -93,7 +87,6 @@ const CardsForActivity: React.FC<CardsForActivityProps> = (
     infoAboutUser: "",
     id: "",
   });
-  let navigate = useNavigate();
   useEffect(() => {
     getActivityById(marker.id)
       .then((activity: any) => {
@@ -210,8 +203,8 @@ const CardsForActivity: React.FC<CardsForActivityProps> = (
       // setMarkers((allActivities: any) => {
       //   return allActivities.filter((act: any) => act.id !== activity.id);
       // });
+      handleClose();
     });
-    navigate("/");
   };
   return (
     // <div className="card">

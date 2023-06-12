@@ -74,7 +74,7 @@ exports.getActivities = async (req, res, next) => {
   }
 };
 
-exports.getActivityInfo = async function (req, res) {
+exports.getActivityInfo = async function (req, res, next) {
   try {
     const activityId = req.params.id;
 

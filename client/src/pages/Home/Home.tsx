@@ -31,7 +31,7 @@ export default function Home() {
 
   useEffect(() => {
     loadMarkers();
-  }, []);
+  }, [selectedMarker]);
   useEffect(() => {
     const address = formData.meetingPoint;
 
@@ -204,8 +204,6 @@ export default function Home() {
               <CardsForActivity
                 marker={selectedMarker}
                 onClose={setSelectedMarker}
-                //@ts-ignore
-                setMarkers={setMarkers}
               />
             )}
           </div>
