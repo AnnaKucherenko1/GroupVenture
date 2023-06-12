@@ -4,11 +4,12 @@ import { useParams } from "react-router-dom";
 import { getUserById } from "../../Services/serviceUser";
 import { useState, useEffect } from "react";
 import AddActivity from "../../components/AddActivity/AddActivity";
-import { UserContext } from "../../UserContext";
+import { useUID } from "../../customHooks";
+
 
 export default function Profile () {
     const { id } = useParams();
-    const { user } = useContext(UserContext);
+    const uid = useUID();
     const [profileUser, setProfileUser] = useState<any | null>(null);
     const [isEditable, setIsEditable] = useState<boolean>(false);
 
@@ -18,6 +19,7 @@ export default function Profile () {
           if (user) {
             setProfileUser(user);
           }
+          console.log(user)
         })
         .catch((error: any) => {
           console.error(error);
@@ -25,10 +27,10 @@ export default function Profile () {
     }, []);
 
     useEffect(() => {
-      if (user && profileUser && user === profileUser.id && !isEditable) {
+      if (uid && profileUser && uid === profileUser.id && !isEditable) {
         setIsEditable(true);
       }
-    }, [user, profileUser])
+    }, [uid, profileUser]);
 
     const renderEditables = () => {
       if (!isEditable) {
@@ -36,10 +38,8 @@ export default function Profile () {
       }
       return (
         <>
-        <input type="text" className="editable">
-
-        </input>
-        <AddActivity/>
+        <button className="editable"> edit profile</button>
+          <AddActivity/>
         </>
       )
     }

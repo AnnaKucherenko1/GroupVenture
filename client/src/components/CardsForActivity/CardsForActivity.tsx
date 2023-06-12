@@ -10,10 +10,10 @@ import {
     MDBBtn
   } from 'mdb-react-ui-kit';
 import { Link, useParams } from "react-router-dom";
-import { getActivityById } from "../../Services/serviceActivity";
+import { getActivities, getActivityById } from "../../Services/serviceActivity";
 import { updateUserActivity } from "../../Services/serviceParticipants";
-import { UserContext } from "../../UserContext";
-import { getUserById } from "../../Services/serviceUser";
+import { getUserById, getUsersByIds } from "../../Services/serviceUser";
+import { useUID } from "../../customHooks";
 export interface Coordinates {
     lat: number | null;
     lng: number | null;
@@ -28,66 +28,114 @@ interface CardsForActivityProps {
 }
 
 const CardsForActivity: React.FC<CardsForActivityProps> = ({ marker, onClose}) => {
-    const [isOpen, setIsOpen] = useState(true);
-    const [activity, setActivity] = useState({ 
-        title: '',
-        date: '',
-        meetingPoint:'',
-        createdBy: '',
-        coordinates: {
-            lat: null,
-            lng: null,
-          },
-        typeOfActivity: '',
-        aboutActivity: '',
-        spots: '',
-        telegramLink: '',
-        
-     });
-     const [user, setUser] = useState({
-      avatar: '',
-        firstName: '',
-        lastName: '',
-        age: '', 
-        infoAboutUser: '',
-        id: ''
-     })
-        useEffect(() => {
-            console.log(marker.id, 'I amhere')
-        getActivityById(marker.id)
-        .then((activity: any) => {
-          
-          if (activity) {
-            setActivity(activity);
-          }
-          getUserById(activity.createdBy).then((user: any) => {
-          
-            if (user) {
-              setUser(user);
-            }
-            })
-            .catch((error: any) => {
-              console.error(error);
-            });
+  const uid = useUID();
+  const [isOpen, setIsOpen] = useState(true);
+  const [occupiedSpots, setOccupiedSpots] = useState(0);
+  const [participants, setParticipants] = useState([])
+  const [activity, setActivity] = useState({ 
+      title: '',
+      date: '',
+      meetingPoint:'',
+      createdBy: '',
+      coordinates: {
+          lat: null,
+          lng: null,
+        },
+      typeOfActivity: '',
+      aboutActivity: '',
+      spots: '',
+      telegramLink: '',
+      
+  });
+
+  const [creator, setCreator] = useState({
+  avatar: '',
+    firstName: '',
+    lastName: '',
+    age: '', 
+    infoAboutUser: '',
+    id: ''
+  });
+
+  // useEffect(() => {
+  //   getActivityById(marker.id).then((activity: any) => {
+
+  //     if (activity) {
+  //       setActivity(activity);
+  //     }
+  //     console.log(activity)
+  //     getUserById(activity.createdBy).then((user: any) => {
+  //       if (user) {
+  //         setCreator(user);
+  //       }
+  //       setOccupiedSpots(activity.UserActivityParticipations.length);
+  //     }).catch((error: any) => {
+  //       console.error(error);
+  //     });
+
+  //   }).catch((error: any) => {
+  //     console.error(error);
+  //   });
+  // }, []);
+  useEffect(() => {
+    getActivityById(marker.id)
+      .then((activity: any) => {
+        if (activity) {
           console.log(activity)
-          })
-          .catch((error: any) => {
-            console.error(error);
-          });
-      }, []);
-    if (!marker || !isOpen) {
-        return null;
-      }
-    
+          setActivity(activity);
+          console.log(activity)
+          const userIds = [activity.createdBy];
+         if(activity.UserActivityParticipations.length > 0) {
+           
+           const userParticipationIds = activity.UserActivityParticipations.map((participation: any) => participation);
+           console.log(userParticipationIds)
+           userIds.push(...userParticipationIds);
+           getUsersByIds(userIds)
+             .then((users: any) => {
+               console.log(users, 'users')
+               const creator = users.find((user: any) => user.id === activity.createdBy);
+               setCreator(creator);
+               console.log(creator.firstName)
+               const participants = users.filter((user: any) => userParticipationIds.includes(user.id));
+               setParticipants(participants);
+               console.log(participants)
+               setOccupiedSpots(activity.UserActivityParticipations.length);
+             })
+             .catch((error: any) => {
+               console.error(error);
+             });
+         } else {
+          getUserById(activity.createdBy).then((user: any) => {
+                    if (user) {
+                      setCreator(user) ;
+                    }
+                    
+                  }).catch((error: any) => {
+                    console.error(error);
+                  });
+         }
+  
+        }
+      })
+      .catch((error: any) => {
+        console.error(error);
+      });
+  }, []);
+
+  if (!marker || !isOpen) {
+      return null;
+  }
+  
   const handleClose = () => {
     setIsOpen(false);
     if (onClose) {
       onClose(null);
     }
   };
+
   const joinActivity = () => {
     const participantsData = {
-      userId: 0, 
+      userId: String(uid || ""), 
       activityId: parseInt(marker.id || "") 
     };
   
@@ -104,25 +152,29 @@ const CardsForActivity: React.FC<CardsForActivityProps> = ({ marker, onClose}) =
     // <div className="card">
     <MDBCard>
       <MDBCardBody>
-        <MDBBtn onClick={handleClose}>Close</MDBBtn>
+      <div className="button-section">
+        <MDBBtn className="delete-button" onClick={handleClose}>✕</MDBBtn>
+        </div>
         <div className="activity-details">
           <MDBCardTitle>{activity.title}</MDBCardTitle>
           <MDBCardSubTitle>{activity.date}</MDBCardSubTitle>
           <MDBCardText>Info about activity: {activity.aboutActivity}</MDBCardText>
           <MDBCardText>
-            Free spots: {activity.spots}/{activity.spots}
+            Occupied spots: {occupiedSpots}/{activity.spots}
           </MDBCardText>
           <MDBCardTitle>Address: {activity.meetingPoint}</MDBCardTitle>
         </div>
         <div className="created-by">
-          <Link to={`/profile/${user.id}`}>Created by: <span>{user.firstName}</span></Link>
+          <Link to={`/profile/${creator.id}`}>Created by: <span>{creator.firstName}</span></Link>
         </div>
         <div className="button-section">
-          <MDBBtn onClick={joinActivity}>Join</MDBBtn>
+          { uid !== parseInt(creator.id) && <MDBBtn onClick={joinActivity}>Join</MDBBtn> }
         </div>
       </MDBCardBody>
     </MDBCard>
   // </div>
   );
   }
+
+  
   export default CardsForActivity;

@@ -44,6 +44,19 @@ exports.getUserInfo = async function (req, res) {
     res.status(500).json({ message: err.message });
   }
 };
+exports.getUsersByIds = async function (req, res) {
+  try {
+    console.log("here");
+    const participantIds = req.body.ids;
+    console.log(req.body);
+    const users = await User.findAll({ where: { id: participantIds } });
+
+    res.status(200).json(users);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: err.message });
+  }
+};
 
 exports.login = async (req, res) => {
   try {
@@ -62,4 +75,17 @@ exports.login = async (req, res) => {
       .status(401)
       .send({ error: "401", message: "Username or password is incorrect" });
   }
+};
+
+exports.logout = (req, res) => {
+  req.session.destroy((error) => {
+    if (error) {
+      res
+        .status(500)
+        .send({ error, message: "Could not log out, please try again" });
+    } else {
+      res.clearCookie("sid");
+      res.status(200).send({ message: "Logout successful" });
+    }
+  });
 };

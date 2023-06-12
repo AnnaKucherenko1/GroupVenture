@@ -48,3 +48,7 @@
     font-size: 16px;
     cursor: pointer;
   }
+  
+  .delete-button {
+    align-self: flex-end;
+  }

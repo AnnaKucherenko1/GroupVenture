@@ -1,10 +1,22 @@
 import "./NavBar.css"
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { UserContext } from "../../UserContext";
+import { useUID } from "../../customHooks";
 
 export default function NavBar () {
-  const { user } = useContext(UserContext);
+  // TODO: UID does not pick up the change in local storage.. FIX
+  const uid = useUID();
+  console.log('NavBar', uid)
+  const [showLogin, setShowLogin] = useState<boolean>(uid ? false : true);
+
+  useEffect(() => {
+    console.log("uid has changed");
+    if (uid) {
+      setShowLogin(false);
+    } else {
+      setShowLogin(true);
+    }
+  }, [uid])
 
   return (
     <div className="navbar">
@@ -12,15 +24,18 @@ export default function NavBar () {
         <li>
           <Link to="/">Home</Link>
         </li>
-        {user ? (
-          <li>
-            <Link to={`/profile/${user}`}>Profile</Link>
-          </li>
-        ) : (
+        {showLogin ? (
           <li>
             <Link to="/login">Login</Link>
           </li>
+        ) : (
+          <li>
+            <Link to={`/profile/${uid}`}>Profile</Link>
+          </li>
         )}
+         <li>
+            <Link to="/logout">Logout</Link>
+          </li>
       </nav>
     </div>
   );

@@ -76,10 +76,34 @@ exports.getActivities = async (req, res, next) => {
 
 exports.getActivityInfo = async function (req, res) {
   try {
-    let activity = await Activity.findOne({ where: { id: req.params.id } });
+    const activityId = req.params.id;
 
-    res.status = 200;
-    res.json(activity);
+    const activity = await Activity.findOne({
+      where: { id: activityId },
+      include: [
+        {
+          model: UserActivityParticipation,
+          attributes: ["userId"],
+        },
+      ],
+    });
+
+    if (!activity) {
+      res.status(404).json({
+        success: false,
+        data: null,
+        message: "Activities not found.",
+      });
+      return next();
+    }
+
+    const participations = activity.dataValues.UserActivityParticipations.map(
+      (participation) => participation.userId
+    );
+    const newActivity = Object.assign({}, activity.dataValues);
+    newActivity.UserActivityParticipations = participations;
+
+    res.status(200).json(newActivity);
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: err.message });
