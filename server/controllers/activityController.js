@@ -109,3 +109,21 @@ exports.getActivityInfo = async function (req, res) {
     res.status(500).json({ message: err.message });
   }
 };
+
+exports.deleteActivity = async function (req, res) {
+  try {
+    const id = req.params.id;
+    console.log(id);
+    if (!id)
+      res.status(400).json({
+        success: false,
+        data: id,
+        message: "wrong id",
+      });
+    let activity = await Activity.destroy({ where: { id: id } });
+    res.json(activity);
+  } catch (error) {
+    console.log(error);
+    res.status(400).send(error.message);
+  }
+};

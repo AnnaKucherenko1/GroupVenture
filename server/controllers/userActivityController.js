@@ -77,7 +77,6 @@ exports.leaveParticipant = async (req, res) => {
       return;
     }
 
-    // Deletes if the row exist , ignores if it does not
     await UserActivityParticipation.destroy({
       where: {
         userId: userId,

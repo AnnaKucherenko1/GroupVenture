@@ -146,10 +146,6 @@ export default function Home() {
       <div className='bodyHome'>
         <form className='search-form' onSubmit={handleSubmit}>
           <Autocomplete
-            // onLoad={(autoComplete) => {
-
-            //   console.log('Autocomplete loaded:', autoComplete);
-            // }}
             onPlaceChanged={() => {
               const selectedPlace = (
                 document.getElementById("meetingPoint") as HTMLInputElement
@@ -164,7 +160,7 @@ export default function Home() {
             <input
               id='meetingPoint'
               type='text'
-              className='form-control'
+              className='form-control input-meetingPoint'
               placeholder='Enter a meeting point or select on map'
               value={formData.meetingPoint}
               onChange={handleChange}
@@ -208,6 +204,8 @@ export default function Home() {
               <CardsForActivity
                 marker={selectedMarker}
                 onClose={setSelectedMarker}
+                //@ts-ignore
+                setMarkers={setMarkers}
               />
             )}
           </div>
