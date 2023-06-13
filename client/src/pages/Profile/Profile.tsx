@@ -15,6 +15,7 @@ export default function Profile() {
   const [profileUser, setProfileUser] = useState<any | null>(null);
   const [isEditable, setIsEditable] = useState<boolean>(false);
   const [isEditing, setEditing] = useState<boolean>(false);
+  const [profileEdited, setProfileEdited] = useState<boolean>(false);
 
   useEffect(() => {
     getUserById(id)
@@ -46,7 +47,6 @@ export default function Profile() {
     const handleEditClick = () => {
       setEditing((state) => !state);
     };
-
     return (
       <>
         <MDBBtn className='mx-2' color='secondary' onClick={handleEditClick}>
@@ -58,6 +58,23 @@ export default function Profile() {
     );
   };
 
+  const handleProfileEdit = () => {
+    setProfileEdited(true);
+  };
+  useEffect(() => {
+    if (profileEdited) {
+      getUserById(id)
+        .then((user: any) => {
+          if (user) {
+            setProfileUser(user);
+            setProfileEdited(false);
+          }
+        })
+        .catch((error: any) => {
+          console.error(error);
+        });
+    }
+  }, [profileEdited, id]);
   return (
     <div
       className='mainDivForProfile'
@@ -78,10 +95,15 @@ export default function Profile() {
           )}
         </div>
         <div className='infoAboutUser'>{profileUser?.infoAboutUser || ""}</div>
-        <CreatedActivities uid={uid} />
+
+        <CreatedActivities />
         <div className='btns'>{RenderEditables()}</div>
         {isEditing && (
-          <EditProfile handleClose={handleClose} profileUser={profileUser} />
+          <EditProfile
+            handleClose={handleClose}
+            profileUser={profileUser}
+            handleProfileEdit={handleProfileEdit}
+          />
         )}
       </div>
     </div>

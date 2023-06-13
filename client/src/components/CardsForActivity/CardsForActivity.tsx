@@ -14,7 +14,6 @@ import {
 import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   deleteActivityByID,
-  getActivities,
   getActivityById,
 } from "../../Services/serviceActivity";
 import {
@@ -23,6 +22,7 @@ import {
 } from "../../Services/serviceParticipants";
 import { getUserById, getUsersByIds } from "../../Services/serviceUser";
 import { useUID } from "../../customHooks";
+import EditActivity from "../EditActivity/EditActivity";
 export interface Coordinates {
   lat: number | null;
   lng: number | null;
@@ -64,6 +64,7 @@ const CardsForActivity: React.FC<CardsForActivityProps> = ({
   const [occupiedSpots, setOccupiedSpots] = useState(0);
   const [participants, setParticipants] = useState<User[]>([]);
   const [isUserParticipant, setIsUserParticipant] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
   const [activity, setActivity] = useState({
     title: "",
     date: "",
@@ -205,6 +206,13 @@ const CardsForActivity: React.FC<CardsForActivityProps> = ({
       handleClose();
     });
   };
+  const editActivity = () => {
+    setIsEditing(true);
+  };
+
+  if (isEditing) {
+    return <EditActivity handleClose={handleClose} />;
+  }
   return (
     <div className='card' style={{ height: "300px", width: "400px" }}>
       <MDBCard>
@@ -219,6 +227,9 @@ const CardsForActivity: React.FC<CardsForActivityProps> = ({
             <MDBCardSubTitle>
               {moment(activity.date).format("llll")}
             </MDBCardSubTitle>
+            <MDBCardText>
+              Type of activity: {activity.typeOfActivity}
+            </MDBCardText>
             <MDBCardText>
               Info about activity: {activity.aboutActivity}
             </MDBCardText>
@@ -267,9 +278,22 @@ const CardsForActivity: React.FC<CardsForActivityProps> = ({
                 </MDBBtn>
               ))}
             {uid === parseInt(creator.id) && (
-              <MDBBtn color='danger' onClick={deleteActivity}>
-                Delete
-              </MDBBtn>
+              <div className='btns'>
+                <MDBBtn
+                  className='me-2 width-btn'
+                  color='info'
+                  onClick={editActivity}
+                >
+                  EDIT
+                </MDBBtn>
+                <MDBBtn
+                  className='me-1 width-btn'
+                  color='danger'
+                  onClick={deleteActivity}
+                >
+                  Delete
+                </MDBBtn>
+              </div>
             )}
           </div>
         </MDBCardBody>

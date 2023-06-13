@@ -1,24 +1,20 @@
 import {
   MDBCard,
   MDBCardBody,
-  MDBCardTitle,
   MDBBtn,
   MDBInput,
   MDBTextArea,
-  MDBCardText,
 } from "mdb-react-ui-kit";
 import "./Profile.css";
 import { FormDataInterface } from "../Authentication/SignupPage";
 import { useState, ChangeEvent, FormEvent, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useUID } from "../../customHooks";
-import { getUserById, updateUser } from "../../Services/serviceUser";
+import { updateUser } from "../../Services/serviceUser";
 
-const EditProfile = ({ handleClose, profileUser }: any) => {
-  const { id } = useParams();
+const EditProfile = ({ handleClose, profileUser, handleProfileEdit }: any) => {
   const uid = useUID();
   const [image, _setImage] = useState(profileUser?.avatar);
-  const navigate = useNavigate();
 
   const [formData, setFormData] = useState<FormDataInterface>({
     avatar: null,
@@ -86,7 +82,6 @@ const EditProfile = ({ handleClose, profileUser }: any) => {
       };
 
       const userUpdated = await updateUser(uid, user);
-      console.log("The user shoudl be updated here ==> ", userUpdated);
 
       const fileInput = document.getElementById("avatar") as HTMLInputElement;
       if (fileInput) {
@@ -94,8 +89,7 @@ const EditProfile = ({ handleClose, profileUser }: any) => {
       }
 
       handleClose();
-
-      //   navigate(`/profile/${id}`);
+      handleProfileEdit();
     } catch (error) {
       console.error("Error uploading image to Cloudinary:", error);
       alert("An error occurred while uploading the image. Please try again.");
@@ -106,10 +100,10 @@ const EditProfile = ({ handleClose, profileUser }: any) => {
     <div className='editProfileContainer'>
       <MDBCard className='w-20'>
         <MDBCardBody>
-          <div>Here you can edit your profile info</div>
-          <div className='d-flex flex-column justify-content-center h-custom-2 w-75 pt-4'>
+          <div className='d-flex flex-column justify-content-center h-custom-2 w-75 pt-2'>
             <form onSubmit={handleSubmit}>
               <div className='mb-2 mx-5 w-100'>
+                <div>Here you can edit your profile info</div>
                 <div className=' d-flex justify-content-center'>
                   <div className='profileAvatar'>
                     {formData.avatar || profileUser?.avatar ? (
@@ -135,7 +129,9 @@ const EditProfile = ({ handleClose, profileUser }: any) => {
                 id='firstName'
                 type='text'
                 size='lg'
-                value={formData.firstName || profileUser?.firstName || ""}
+                defaultValue={
+                  formData.firstName || profileUser?.firstName || ""
+                }
                 onChange={handleChange}
               />
               <MDBInput
@@ -144,7 +140,7 @@ const EditProfile = ({ handleClose, profileUser }: any) => {
                 id='lastName'
                 type='text'
                 size='lg'
-                value={formData.lastName || profileUser?.lastName || ""}
+                defaultValue={formData.lastName || profileUser?.lastName || ""}
                 onChange={handleChange}
               />
               <MDBInput
@@ -154,7 +150,7 @@ const EditProfile = ({ handleClose, profileUser }: any) => {
                 type='number'
                 size='lg'
                 min='0'
-                value={formData.age || profileUser?.age || ""}
+                defaultValue={formData.age || profileUser?.age || ""}
                 onChange={handleChange}
               />
               <MDBTextArea
@@ -162,7 +158,7 @@ const EditProfile = ({ handleClose, profileUser }: any) => {
                 label='Info about you'
                 id='infoAboutUser'
                 size='lg'
-                value={
+                defaultValue={
                   formData.infoAboutUser || profileUser?.infoAboutUser || ""
                 }
                 onChange={handleChange}
@@ -173,7 +169,7 @@ const EditProfile = ({ handleClose, profileUser }: any) => {
                 id='email'
                 type='email'
                 size='lg'
-                value={formData.email || profileUser?.email || ""}
+                defaultValue={formData.email || profileUser?.email || ""}
                 onChange={handleChange}
               />
               <MDBInput
@@ -182,22 +178,27 @@ const EditProfile = ({ handleClose, profileUser }: any) => {
                 id='password'
                 type='password'
                 size='lg'
-                value={formData.password || profileUser?.password || ""}
+                defaultValue={formData.password || profileUser?.password || ""}
                 onChange={handleChange}
               />
               <MDBBtn
-                className='mb-2 px-5 mx-5 w-100'
+                className='mb-2 px-4 mx-5 w-100'
                 color='info'
                 size='lg'
                 type='submit'
               >
                 Submit Changes
               </MDBBtn>
+              <MDBBtn
+                className='mb-2 px-4 mx-5 w-100'
+                color='danger'
+                size='lg'
+                onClick={handleClose}
+              >
+                Close
+              </MDBBtn>
             </form>
           </div>
-          <MDBBtn color='danger' onClick={handleClose}>
-            Close
-          </MDBBtn>
         </MDBCardBody>
       </MDBCard>
     </div>

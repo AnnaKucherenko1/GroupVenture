@@ -2,18 +2,24 @@ import { useEffect, useState } from "react";
 import { getActivities } from "../../Services/serviceActivity";
 import "./CreatedActivities.css";
 import { ActivityInterface } from "../../pages/AddActivityPage/AddActivityPage";
+import { useUID } from "../../customHooks";
+import { useParams } from "react-router-dom";
 
-const CreatedActivities = ({ uid }: { uid: number }) => {
+const CreatedActivities = () => {
   const [createdActivities, setCreatedActivities] = useState<
     ActivityInterface[]
   >([]);
+  const uid = useUID();
+  const { id } = useParams();
   useEffect(() => {
     const fetchActivities = async () => {
       try {
         const activities = await getActivities();
+        console.log(activities);
         const filteredActivities = activities.data.filter(
-          (activity: any) => parseInt(activity.createdBy) === uid
+          (activity: any) => activity.createdBy == id
         );
+        console.log(filteredActivities);
         setCreatedActivities(filteredActivities);
       } catch (error) {
         console.error(error);
