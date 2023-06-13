@@ -1,4 +1,6 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import moment from "moment";
+
 import "./CardsForActivity.css";
 import {
   MDBCard,
@@ -93,20 +95,20 @@ const CardsForActivity: React.FC<CardsForActivityProps> = ({
         if (activity) {
           console.log(activity);
           setActivity(activity);
-          console.log(activity);
           const userIds = [activity.createdBy];
           if (activity.UserActivityParticipations.length > 0) {
             const userParticipationIds =
               activity.UserActivityParticipations.map(
                 (participation: any) => participation
               );
-            console.log(userParticipationIds);
             userIds.push(...userParticipationIds);
+            console.log(userParticipationIds, "userParticipations");
             getUsersByIds(userIds)
               .then((users: any) => {
                 const creator = users.find(
                   (user: any) => user.id === activity.createdBy
                 );
+                console.log(creator, "this is an creator");
                 setCreator(creator);
                 const participants = users.filter((user: any) =>
                   userParticipationIds.includes(user.id)
@@ -200,68 +202,79 @@ const CardsForActivity: React.FC<CardsForActivityProps> = ({
   };
   const deleteActivity = () => {
     deleteActivityByID(activity.id).then(() => {
-      // setMarkers((allActivities: any) => {
-      //   return allActivities.filter((act: any) => act.id !== activity.id);
-      // });
       handleClose();
     });
   };
   return (
-    // <div className="card">
-    <MDBCard>
-      <MDBCardBody>
-        <div className='button-section'>
-          <MDBBtn className='delete-button' onClick={handleClose}>
-            ✕
-          </MDBBtn>
-        </div>
-        <div className='activity-details'>
-          <MDBCardTitle>{activity.title}</MDBCardTitle>
-          <MDBCardSubTitle>{activity.date}</MDBCardSubTitle>
-          <MDBCardText>
-            Info about activity: {activity.aboutActivity}
-          </MDBCardText>
-          <MDBCardText>
-            Occupied spots: {occupiedSpots}/{activity.spots}
-          </MDBCardText>
-          <MDBCardTitle>Address: {activity.meetingPoint}</MDBCardTitle>
-        </div>
-        <div className='created-by'>
-          <Link to={`/profile/${creator.id}`}>
-            Created by: <span>{creator.firstName}</span>
-          </Link>
-        </div>
-        <div>
-          already joined:
-          {participants.map((part, index) => (
-            <React.Fragment key={part.id}>
-              <Link to={`/profile/${part.id}`}>
-                <span>{part.firstName}</span>
-              </Link>
-              {index !== participants.length - 1 && ", "}
-            </React.Fragment>
-          ))}
-        </div>
-        <div className='button-section'>
-          {uid !== parseInt(creator.id) &&
-            (isUserParticipant ? (
-              <MDBBtn color='danger' onClick={leaveActivity}>
-                Leave
-              </MDBBtn>
-            ) : (
-              <MDBBtn color='success' onClick={joinActivity}>
-                Join
-              </MDBBtn>
-            ))}
-          {uid === parseInt(creator.id) && (
-            <MDBBtn color='danger' onClick={deleteActivity}>
-              Delete
+    <div className='card' style={{ height: "300px", width: "400px" }}>
+      <MDBCard>
+        <MDBCardBody>
+          <div className='button-section'>
+            <MDBBtn className='delete-button' onClick={handleClose}>
+              ✕
             </MDBBtn>
+          </div>
+          <div className='activity-details'>
+            <MDBCardTitle>{activity.title}</MDBCardTitle>
+            <MDBCardSubTitle>
+              {moment(activity.date).format("llll")}
+            </MDBCardSubTitle>
+            <MDBCardText>
+              Info about activity: {activity.aboutActivity}
+            </MDBCardText>
+            <MDBCardTitle>Address: {activity.meetingPoint}</MDBCardTitle>
+            <MDBCardText>
+              Occupied spots: {occupiedSpots}/{activity.spots}
+            </MDBCardText>
+          </div>
+          <Link to={`/profile/${creator.id}`}>
+            <div className='created-by'>
+              <div className='createdText'>
+                {" "}
+                Created by: <span>{creator.firstName} </span>
+              </div>
+              <div className='avatar'>
+                {" "}
+                <img src={creator?.avatar} alt='Avatar' />
+              </div>
+            </div>
+          </Link>
+          {participants.length ? (
+            <div>
+              already joined:
+              {participants.map((part, index) => (
+                <React.Fragment key={part.id}>
+                  <Link to={`/profile/${part.id}`}>
+                    <span>{part.firstName}</span>
+                  </Link>
+                  {index !== participants.length - 1 && ", "}
+                </React.Fragment>
+              ))}
+            </div>
+          ) : (
+            <div>no participants yet</div>
           )}
-        </div>
-      </MDBCardBody>
-    </MDBCard>
-    // </div>
+
+          <div className='button-section'>
+            {uid !== parseInt(creator.id) &&
+              (isUserParticipant ? (
+                <MDBBtn color='danger' onClick={leaveActivity}>
+                  Leave
+                </MDBBtn>
+              ) : (
+                <MDBBtn color='success' onClick={joinActivity}>
+                  Join
+                </MDBBtn>
+              ))}
+            {uid === parseInt(creator.id) && (
+              <MDBBtn color='danger' onClick={deleteActivity}>
+                Delete
+              </MDBBtn>
+            )}
+          </div>
+        </MDBCardBody>
+      </MDBCard>
+    </div>
   );
 };
 

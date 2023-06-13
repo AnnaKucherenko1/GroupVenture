@@ -1,12 +1,11 @@
-import "./NavBar.css"
+import "./NavBar.css";
 import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useUID } from "../../customHooks";
 
-export default function NavBar () {
-  // TODO: UID does not pick up the change in local storage.. FIX
+export default function NavBar() {
   const uid = useUID();
-  console.log('NavBar', uid)
+  console.log("NavBar", uid);
   const [showLogin, setShowLogin] = useState<boolean>(uid ? false : true);
 
   useEffect(() => {
@@ -16,26 +15,39 @@ export default function NavBar () {
     } else {
       setShowLogin(true);
     }
-  }, [uid])
+  }, [uid]);
 
   return (
-    <div className="navbar">
-      <nav id="nav">
+    <div className='navbar'>
+      <nav id='nav'>
+        <div
+          className='app-name'
+          style={{
+            fontFamily: "Orbit",
+            fontStyle: "sans-serif",
+            fontWeight: "cursive",
+          }}
+        >
+          GroupVenture
+          <span className='material-symbols-outlined'>diversity_3</span>
+        </div>
         <li>
-          <Link to="/">Home</Link>
+          <Link to='/'>Home</Link>
         </li>
         {showLogin ? (
           <li>
-            <Link to="/login">Login</Link>
+            <Link to='/login'>Login</Link>
           </li>
         ) : (
-          <li>
-            <Link to={`/profile/${uid}`}>Profile</Link>
-          </li>
+          <>
+            <li>
+              <Link to={`/profile/${uid}`}>Profile</Link>
+            </li>
+            <li>
+              <Link to='/logout'>Logout</Link>
+            </li>
+          </>
         )}
-         <li>
-            <Link to="/logout">Logout</Link>
-          </li>
       </nav>
     </div>
   );

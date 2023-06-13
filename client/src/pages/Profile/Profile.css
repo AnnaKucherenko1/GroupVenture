@@ -1,24 +1,59 @@
 .mainDivForProfile {
-    display: flex;
-    justify-content: center;
-    height: 100vh;
-    width: 100vw;
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+  background-size: cover;
 }
-.profileBody{
-    height: 100%;
+.profileBody {
+  padding: 30px;
+  margin: 50px;
+  height: 60%;
+  width: 50%;
+  border-radius: 15px;
+  background-color: rgba(240, 248, 255, 0.657);
+  align-items: center;
+  display: flex;
+  /* justify-content: center; */
+  flex-direction: column;
+  color: black;
 }
 .profileAvatar {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    overflow: hidden;
-  }
-  
-  .profileAvatar img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  margin: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.profileAvatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.profileName {
+  font-size: 18px;
+}
+
+.infoAboutUser {
+  padding: 5px;
+  width: 60%;
+  background-color: white;
+  border-radius: 10px;
+}
+.btns {
+  margin: 15px;
+  display: flex;
+
+  flex-direction: row;
+}
+.editProfileContainer {
+  position: absolute;
+}
+.createdActv {
+  display: flex;
+  justify-content: row;
 }

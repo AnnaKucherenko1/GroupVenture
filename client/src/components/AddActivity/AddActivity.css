@@ -1,16 +1,8 @@
-.button{
-    width: 200px;
-    height: 40px;
-    margin-top: 50px;
-    background-color: rgba(255, 255, 255, 0.602);
-    border-radius: 10px;
-    /* margin: 100px; */
-}
+
 p {
     color: white
 }
-.testBlock{
-    margin-top: 50px;
-    color: white;
-    font-size: 25px
+.testBlock {
+background-color: rgba(0, 0, 0, 0.364);
+border-radius: 7px;
 }

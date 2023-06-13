@@ -5,8 +5,8 @@ import "./Home.css";
 import { getActivities } from "../../Services/serviceActivity";
 import { ActivityInterface } from "../AddActivityPage/AddActivityPage";
 import CardsForActivity from "../../components/CardsForActivity/CardsForActivity";
-import { useNavigate } from "react-router-dom";
 import { Autocomplete } from "@react-google-maps/api";
+import { useUID } from "../../customHooks";
 
 export default function Home() {
   const geocoder = new google.maps.Geocoder();
@@ -28,7 +28,7 @@ export default function Home() {
   const [selectedMarker, setSelectedMarker] = useState<Coordinates | null>(
     null
   );
-
+  const uid = useUID();
   useEffect(() => {
     loadMarkers();
   }, [selectedMarker]);
@@ -105,7 +105,11 @@ export default function Home() {
   };
 
   const handleMarkerClick = (marker: Coordinates) => {
-    setSelectedMarker(marker);
+    if (uid) {
+      setSelectedMarker(marker);
+    } else {
+      alert("You need to log in to see information about activities");
+    }
   };
   const handleTypeOfActivityChange = (e: ChangeEvent<HTMLSelectElement>) => {
     setFormData({
@@ -143,73 +147,89 @@ export default function Home() {
         backgroundImage: "url(/pexels.jpeg)",
       }}
     >
-      <div className='bodyHome'>
-        <form className='search-form' onSubmit={handleSubmit}>
-          <Autocomplete
-            onPlaceChanged={() => {
-              const selectedPlace = (
-                document.getElementById("meetingPoint") as HTMLInputElement
-              ).value;
+      <div className='homePageMain'>
+        <div className='bodyHome'>
+          <form className='search-form' onSubmit={handleSubmit}>
+            <div className='form-group'>
+              {/* <label htmlFor='meetingPoint'>Meeting Point:</label> */}
+              <Autocomplete
+                onPlaceChanged={() => {
+                  const selectedPlace = (
+                    document.getElementById("meetingPoint") as HTMLInputElement
+                  ).value;
 
-              setFormData({
-                ...formData,
-                meetingPoint: selectedPlace,
-              });
-            }}
-          >
-            <input
-              id='meetingPoint'
-              type='text'
-              className='form-control input-meetingPoint'
-              placeholder='Enter a meeting point or select on map'
-              value={formData.meetingPoint}
-              onChange={handleChange}
-            />
-          </Autocomplete>
+                  setFormData({
+                    ...formData,
+                    meetingPoint: selectedPlace,
+                  });
+                }}
+              >
+                <input
+                  id='meetingPoint'
+                  type='text'
+                  className='form-control'
+                  placeholder='Enter a meeting point'
+                  value={formData.meetingPoint}
+                  onChange={handleChange}
+                />
+              </Autocomplete>
+            </div>
 
-          <select
-            id='typeOfActivity'
-            value={formData.typeOfActivity}
-            onChange={handleTypeOfActivityChange}
-          >
-            <option value=''>Select an activity type</option>
-            <option value='hiking'>Hiking</option>
-            <option value='trip'>Trip</option>
-            <option value='city activities'>City activities</option>
-            <option value='camping'>Camping</option>
-            <option value='sport activities'>Sport activities</option>
-            <option value='all'>Select all</option>
-          </select>
+            <div className='form-group'>
+              {/* <label htmlFor='typeOfActivity'>Type of Activity:</label> */}
+              <select
+                id='typeOfActivity'
+                className='form-control'
+                value={formData.typeOfActivity}
+                onChange={handleTypeOfActivityChange}
+              >
+                <option value=''>Select an activity type</option>
+                <option value='hiking'>Hiking</option>
+                <option value='trip'>Trip</option>
+                <option value='city activities'>City activities</option>
+                <option value='camping'>Camping</option>
+                <option value='sport activities'>Sport activities</option>
+                <option value='all'>Select all</option>
+              </select>
+            </div>
 
-          <input
-            type='date'
-            name='date'
-            value={formData.date}
-            onChange={handleChange}
-          />
-
-          <div className='search-button-container'>
-            <input type='submit' value='Search' className='search-button' />
-          </div>
-        </form>
-        <div className='mapHomePage'>
-          <Map
-            markers={markers}
-            selectedMarker={selectedMarker}
-            onMarkerClick={handleMarkerClick}
-            center={mapCenter as google.maps.LatLngLiteral}
-          />
-          <div className='cardContainer'>
-            {selectedMarker && (
-              <CardsForActivity
-                marker={selectedMarker}
-                onClose={setSelectedMarker}
+            <div className='form-group'>
+              {/* <label htmlFor='date'>Date:</label> */}
+              <input
+                type='date'
+                id='date'
+                className='form-control'
+                name='date'
+                value={formData.date}
+                onChange={handleChange}
               />
+            </div>
+
+            <div className='form-group'>
+              <input type='submit' value='Search' className='search-button' />
+            </div>
+          </form>
+          <div className='mapHomePage'>
+            <Map
+              markers={markers}
+              selectedMarker={selectedMarker}
+              onMarkerClick={handleMarkerClick}
+              center={mapCenter as google.maps.LatLngLiteral}
+            />
+            {uid && (
+              <div className='cardContainer'>
+                {selectedMarker && (
+                  <CardsForActivity
+                    marker={selectedMarker}
+                    onClose={setSelectedMarker}
+                  />
+                )}
+              </div>
             )}
           </div>
+          {/* {JSON.stringify(selectedMarker)} */}
         </div>
         <AddActivity />
-        {/* {JSON.stringify(selectedMarker)} */}
       </div>
     </div>
   );
