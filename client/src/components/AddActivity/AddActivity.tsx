@@ -19,16 +19,13 @@ export default function AddActivity() {
           Add an activity
         </MDBBtn>
       ) : (
-        // <button className='button' onClick={handleClick}>
-        //   Add an activity
-        // </button>
         <p
           className='testBlock'
           style={{ fontWeight: "bold", fontSize: "20px" }}
         >
-          You need to be logged in to be able to create activities.{" "}
-          <Link to='/login'>Log in</Link> or <Link to='/signup'>Sign up</Link>{" "}
-          to get started.
+          To access detailed information about activities, please log in to your
+          account. <Link to='/login'>Log in</Link> or{" "}
+          <Link to='/signup'>Sign up</Link> to get started.
         </p>
       )}
     </div>

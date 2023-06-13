@@ -18,4 +18,6 @@ router.get("/profile/:id", authMiddleware, usersController.getUserInfo);
 router.get("/activities", activityController.getActivities);
 router.get("/:id", activityController.getActivityInfo);
 router.delete("/delete/:id", activityController.deleteActivity);
+router.put("/profile/edit/:id", usersController.editUser);
+
 module.exports = router;

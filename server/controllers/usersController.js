@@ -90,3 +90,19 @@ exports.logout = (req, res) => {
     }
   });
 };
+
+exports.editUser = async function (req, res) {
+  const { id, info } = req.body;
+  console.log(req.body);
+  try {
+    const rowsAffected = await User.update(info, { where: { id: id } });
+    const usrUpdated = await User.findByPk(id);
+    console.log(usrUpdated);
+    res.status = 200;
+    res.json(usrUpdated);
+  } catch (err) {
+    console.log(err);
+    res.status = 500;
+    res.body = err.message;
+  }
+};

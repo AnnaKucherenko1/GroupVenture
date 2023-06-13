@@ -75,3 +75,17 @@ export function logout() {
     }
   });
 }
+
+export function updateUser(id: number, info: any) {
+  return fetch(root + "profile/edit/" + id, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ id, info }),
+  }).then((res) => {
+    if (res.ok) {
+      return res.json();
+    } else {
+      throw new Error(res.statusText);
+    }
+  });
+}

@@ -34,6 +34,7 @@ interface AvatarUploadProps {
 
 export default function SignupPage() {
   const navigate = useNavigate();
+
   const [image, _setImage] = useState<string | undefined>(undefined);
   const [formData, setFormData] = useState<FormDataInterface>({
     avatar: null,
@@ -54,6 +55,15 @@ export default function SignupPage() {
         ...formData,
         avatar: file || null,
       });
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          _setImage(reader.result as string);
+        };
+        reader.readAsDataURL(file);
+      } else {
+        _setImage(undefined);
+      }
     } else {
       setFormData({
         ...formData,
@@ -119,7 +129,7 @@ export default function SignupPage() {
         fileInput.value = "";
       }
 
-      navigate("/profile/${id}");
+      navigate("/login");
     } catch (error) {
       console.error("Error uploading image to Cloudinary:", error);
       alert("An error occurred while uploading the image. Please try again.");
@@ -133,16 +143,23 @@ export default function SignupPage() {
           <div className='signUp'>
             <div className='d-flex flex-column justify-content-center h-custom-2 w-75 pt-4'>
               <h3
-                className='fw-normal mb-3 ps-5 pb-3'
-                style={{ letterSpacing: "1px" }}
+                className='fw-normal mb-3 ps-5 '
+                style={{ letterSpacing: "3px", marginLeft: "30px" }}
               >
-                Sign Up Now
+                <span>Sign Up Now</span>
               </h3>
               <form onSubmit={handleSubmit}>
                 <div className='mb-4 mx-5 w-100'>
-                  <label style={{ letterSpacing: "1px" }}>
-                    Choose your profile picture
-                  </label>
+                  <div className=' d-flex justify-content-center'>
+                    <div className='profileAvatar'>
+                      <img src={image} />
+                      {!image && (
+                        <div className='altTextContainer'>
+                          <div> Choose your profile picture</div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
                   <MDBInput
                     wrapperClass='mb-0'
                     id='avatar'
@@ -176,6 +193,7 @@ export default function SignupPage() {
                   id='age'
                   type='number'
                   size='lg'
+                  min='0'
                   value={formData.age}
                   onChange={handleChange}
                 />
