@@ -6,9 +6,6 @@ import React, {
   useEffect,
   useContext,
 } from "react";
-import { useLoadScript } from "@react-google-maps/api";
-import { StandaloneSearchBox, Marker } from "@react-google-maps/api";
-// import './AddActivityPage.css'
 import Map, { Coordinates } from "../../components/Map/Map";
 import {
   MDBBtn,
@@ -127,13 +124,6 @@ export default function AddActivityPage() {
     });
   };
   const mapRef = useRef<google.maps.Map | null>(null);
-  // const autocompleteRef = useRef<google.maps.places.Autocomplete | null>(null);
-  // useEffect(() => {
-  //   if (autocompleteRef.current) {
-  //     autocompleteRef.current.addListener("place_changed", handlePlaceChanged);
-
-  //   }
-  // }, []);
 
   const handleTypeOfActivityChange = (e: ChangeEvent<HTMLSelectElement>) => {
     setFormData({
@@ -184,50 +174,6 @@ export default function AddActivityPage() {
 
     console.log("Map clicked:", event.latLng.lat(), event.latLng.lng());
   };
-  // const handlePlacesChanged = (place: google.maps.places.PlaceResult | null) => {
-  //   if (place) {
-  //     const address = place.formatted_address;
-  //     const location = place.geometry?.location;
-
-  //     if (address && location) {
-  //       setFormData({
-  //         ...formData,
-  //         meetingPoint: address,
-  //       });
-
-  //       // setMarkerPosition(location);
-  //       console.log('Selected place:', address);
-  //       console.log('Location:', location.lat(), location.lng());
-  //       console.log(formData)
-
-  //       const marker = new google.maps.Marker({
-  //         position: location,
-  //         map: mapRef.current,
-  //       });
-  //     }
-  //   }
-  // };
-
-  // const handlePlaceChanged = () => {
-  //   if (autocompleteRef.current) {
-  //     const selectedPlace = autocompleteRef.current.getPlace();
-
-  //     if (selectedPlace.place_id) {
-  //       const address = selectedPlace.formatted_address || '';
-
-  //       setFormData({
-  //         ...formData,
-  //         meetingPoint: address,
-  //       });
-
-  //       handlePlacesChanged(selectedPlace);
-  //     }
-  //   }
-  // };
-  // useEffect(() => {
-  //   console.log(formData);
-  // }, [formData]);
-
   return (
     <MDBContainer fluid>
       <MDBRow className='justify-content-center'>
@@ -255,14 +201,7 @@ export default function AddActivityPage() {
                 onChange={handleChange}
               />
               <div>
-                {/* <label htmlFor="meetingPoint" className="form-label">
-                  Meeting point
-                </label> */}
                 <Autocomplete
-                  // onLoad={(autoComplete) => {
-
-                  //   console.log('Autocomplete loaded:', autoComplete);
-                  // }}
                   onPlaceChanged={() => {
                     const selectedPlace = (
                       document.getElementById(
@@ -274,23 +213,6 @@ export default function AddActivityPage() {
                       ...formData,
                       meetingPoint: selectedPlace,
                     });
-
-                    // console.log(selectedPlace)
-                    // const request = {
-                    //   placeId: selectedPlace,
-                    //   fields: ['formatted_address', 'geometry'],
-                    // };
-
-                    // const service = new google.maps.places.PlacesService(
-                    //   document.createElement('div')
-                    // );
-
-                    // service.getDetails(request, (place, status) => {
-                    //   if (status === google.maps.places.PlacesServiceStatus.OK) {
-                    //     console.log(place)
-                    //     handlePlacesChanged(place);
-                    //   }
-                    // });
                   }}
                 >
                   <input

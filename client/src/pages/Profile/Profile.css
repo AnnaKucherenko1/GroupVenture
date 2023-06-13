@@ -13,7 +13,7 @@
 .profileBody {
   padding: 30px;
   margin: 50px;
-  height: 60%;
+  height: 80%;
   width: 50%;
   border-radius: 15px;
   background-color: rgba(240, 248, 255, 0.657);
@@ -45,7 +45,7 @@
 
 .infoAboutUser {
   padding: 5px;
-  width: 60%;
+  width: 80%;
   background-color: white;
   border-radius: 10px;
 }

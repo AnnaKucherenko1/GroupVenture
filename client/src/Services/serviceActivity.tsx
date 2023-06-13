@@ -38,3 +38,17 @@ export function deleteActivityByID(id: string) {
     method: "DELETE",
   });
 }
+
+export function updateActivity(id: string, info: any) {
+  return fetch(root + "editactivity/" + id, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ id, info }),
+  }).then((res) => {
+    if (res.ok) {
+      return res.json();
+    } else {
+      throw new Error(res.statusText);
+    }
+  });
+}

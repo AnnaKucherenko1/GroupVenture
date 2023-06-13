@@ -63,10 +63,10 @@ export default function Home() {
       }
     });
   }, [formData.meetingPoint]);
-
   const loadMarkers = async () => {
     try {
       const activities = await getActivities();
+      console.log(activities, "act");
       const filteredActivities = activities.data.filter(
         (activity: ActivityInterface) => {
           if (formData.date && activity.date !== formData.date) {
@@ -79,20 +79,10 @@ export default function Home() {
             return false;
           }
 
-          // Check if the activity matches the selected coordinates??????
-          // if (
-          //   formData.coordinates.lat !== 0 &&
-          //   formData.coordinates.lng !== 0 &&
-          //   (activity.coordinates.lat !== formData.coordinates.lat ||
-          //     activity.coordinates.lng !== formData.coordinates.lng)
-          // ) {
-          //   return false;
-          // }
-
           return true;
         }
       );
-
+      console.log(filteredActivities, "filtred");
       const markers = filteredActivities.map((activity: ActivityInterface) => ({
         lat: activity.coordinates.lat,
         lng: activity.coordinates.lng,
@@ -151,7 +141,6 @@ export default function Home() {
         <div className='bodyHome'>
           <form className='search-form' onSubmit={handleSubmit}>
             <div className='form-group'>
-              {/* <label htmlFor='meetingPoint'>Meeting Point:</label> */}
               <Autocomplete
                 onPlaceChanged={() => {
                   const selectedPlace = (
@@ -176,7 +165,6 @@ export default function Home() {
             </div>
 
             <div className='form-group'>
-              {/* <label htmlFor='typeOfActivity'>Type of Activity:</label> */}
               <select
                 id='typeOfActivity'
                 className='form-control'

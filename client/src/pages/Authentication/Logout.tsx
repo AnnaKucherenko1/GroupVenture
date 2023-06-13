@@ -25,7 +25,7 @@ export default function Logout({ setIsLoggedIn }: any) {
           activities anymore
         </h2>
         <div className='btns'>
-          <MDBBtn className='mx-2' color='success'>
+          <MDBBtn className='mx-2' color='info'>
             No
           </MDBBtn>
           <Link to='/'>

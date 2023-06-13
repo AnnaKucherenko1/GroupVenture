@@ -44,19 +44,6 @@ exports.getUserInfo = async function (req, res) {
     res.status(500).json({ message: err.message });
   }
 };
-// exports.getUsersByIds = async function (req, res) {
-//   try {
-//     console.log("here ==> ", req.body.ids);
-//     const participantIds = req.body.ids;
-//     console.log(req.body);
-//     const users = await User.findAll({ where: { id: participantIds } });
-
-//     res.status(200).json(users);
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).json({ message: err.message });
-//   }
-// };
 
 exports.login = async (req, res) => {
   try {

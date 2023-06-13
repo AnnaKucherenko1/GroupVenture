@@ -9,8 +9,10 @@ import {
 import { ChangeEvent, FormEvent, useState } from "react";
 import { ActivityInterface } from "../../pages/AddActivityPage/AddActivityPage";
 import "./EditActivity.css";
+import { background, color } from "@chakra-ui/react";
+import { updateActivity } from "../../Services/serviceActivity";
 
-export default function EditActivity({ handleClose }: any) {
+export default function EditActivity({ handleClose, activity }: any) {
   const [formData, setFormData] = useState<ActivityInterface>({
     title: "",
     date: "",
@@ -36,7 +38,18 @@ export default function EditActivity({ handleClose }: any) {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // postActivity(formData, uid);
+    const newActivity = {
+      title: formData.title || activity.title,
+      date: formData.date || activity.date,
+      meetingPoint: activity.meetingPoint,
+      coordinates: activity.coordinates,
+      typeOfActivity: formData.typeOfActivity || activity.typeOfActivity,
+      aboutActivity: formData.aboutActivity || activity.aboutActivity,
+      spots: formData.spots || activity.spots,
+      telegramLink: formData.telegramLink || activity.telegramLink,
+    };
+    const activityUpdated = updateActivity(activity.id, newActivity);
+    handleClose();
     setFormData({
       title: "",
       date: "",
@@ -65,9 +78,9 @@ export default function EditActivity({ handleClose }: any) {
         <MDBRow className='justify-content-center'>
           <MDBCol sm='9'>
             <div className='d-flex flex-column justify-content-center align-items-center mt-5'>
-              <div className='fw-normal mb-3' style={{ letterSpacing: "1px" }}>
-                Change info about activity and submit
-              </div>
+              <h3 className='fw-normal mb-3' style={{ letterSpacing: "1px" }}>
+                Change info about activity
+              </h3>
               <form onSubmit={handleSubmit} style={{ width: "100%" }}>
                 <MDBInput
                   wrapperClass='mb-2 w-100'
@@ -75,7 +88,7 @@ export default function EditActivity({ handleClose }: any) {
                   id='title'
                   type='text'
                   size='lg'
-                  value={formData.title}
+                  defaultValue={formData.title || activity?.title || ""}
                   onChange={handleChange}
                 />
                 <MDBInput
@@ -83,19 +96,18 @@ export default function EditActivity({ handleClose }: any) {
                   id='date'
                   type='datetime-local'
                   size='lg'
-                  value={formData.date}
+                  defaultValue={formData.date || activity?.date || ""}
                   onChange={handleChange}
                 />
                 <div className='mb-2'>
-                  <label
-                    htmlFor='typeOfActivity'
-                    className='form-label'
-                  ></label>
                   <select
                     id='typeOfActivity'
                     className='form-select'
-                    value={formData.typeOfActivity}
+                    defaultValue={
+                      formData.typeOfActivity || activity?.typeOfActivity || ""
+                    }
                     onChange={handleTypeOfActivityChange}
+                    style={{ background: "transparent" }}
                   >
                     <option value=''>Select an activity type</option>
                     <option value='hiking'>Hiking</option>
@@ -111,7 +123,7 @@ export default function EditActivity({ handleClose }: any) {
                   id='spots'
                   type='number'
                   size='lg'
-                  value={formData.spots}
+                  defaultValue={formData.spots || activity?.spots || ""}
                   min='0'
                   onChange={handleChange}
                 />
@@ -121,7 +133,9 @@ export default function EditActivity({ handleClose }: any) {
                   id='telegramLink'
                   type='text'
                   size='lg'
-                  value={formData.telegramLink}
+                  defaultValue={
+                    formData.telegramLink || activity?.telegramLink || ""
+                  }
                   onChange={handleChange}
                 />
                 <MDBTextArea
@@ -129,7 +143,9 @@ export default function EditActivity({ handleClose }: any) {
                   label='Tell us something about this activity'
                   id='aboutActivity'
                   rows={4}
-                  value={formData.aboutActivity}
+                  defaultValue={
+                    formData.aboutActivity || activity?.aboutActivity || ""
+                  }
                   onChange={handleChange}
                 />
                 <MDBBtn

@@ -127,3 +127,18 @@ exports.deleteActivity = async function (req, res) {
     res.status(400).send(error.message);
   }
 };
+
+exports.editActivity = async function (req, res) {
+  const { id, info } = req.body;
+  console.log(req.body);
+  try {
+    const rowsAffected = await Activity.update(info, { where: { id: id } });
+    const actUpdated = await Activity.findByPk(id);
+    res.status = 200;
+    res.json(actUpdated);
+  } catch (err) {
+    console.log(err);
+    res.status = 500;
+    res.body = err.message;
+  }
+};

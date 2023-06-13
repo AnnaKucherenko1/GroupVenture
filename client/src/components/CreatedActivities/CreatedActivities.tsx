@@ -19,7 +19,7 @@ const CreatedActivities = () => {
         const filteredActivities = activities.data.filter(
           (activity: any) => activity.createdBy == id
         );
-        console.log(filteredActivities);
+
         setCreatedActivities(filteredActivities);
       } catch (error) {
         console.error(error);
@@ -33,15 +33,17 @@ const CreatedActivities = () => {
     <>
       {createdActivities.length > 0 && (
         <div className='createdActv'>
-          <div>Created activities:</div>
-          {createdActivities.map((activity: any, index: number) => (
-            <div key={activity.id}>
-              <span>
-                {activity.title}
-                {index !== createdActivities.length - 1 && ","}
-              </span>
-            </div>
-          ))}
+          <div className='created-activities-title'> Created activities:</div>
+          <div className='activity-list'>
+            {createdActivities.map((activity: any, index: number) => (
+              <div key={activity.id}>
+                <span>
+                  {activity.title}
+                  {index !== createdActivities.length - 1 && ","}
+                </span>
+              </div>
+            ))}
+          </div>
         </div>
       )}
     </>
