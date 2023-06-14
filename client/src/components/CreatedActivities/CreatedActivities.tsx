@@ -15,7 +15,6 @@ const CreatedActivities = () => {
     const fetchActivities = async () => {
       try {
         const activities = await getActivities();
-        console.log(activities);
         const filteredActivities = activities.data.filter(
           (activity: any) => activity.createdBy == id
         );

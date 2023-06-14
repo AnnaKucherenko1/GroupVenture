@@ -3,15 +3,12 @@ import moment from "moment";
 
 import "./CardsForActivity.css";
 import {
-  MDBCard,
-  MDBCardBody,
   MDBCardTitle,
   MDBCardSubTitle,
   MDBCardText,
-  MDBCardLink,
   MDBBtn,
 } from "mdb-react-ui-kit";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   deleteActivityByID,
   getActivityById,
@@ -41,18 +38,6 @@ interface User {
   age: string;
   infoAboutUser: string;
   id: string;
-}
-interface Activity {
-  title: string;
-  date: string;
-  meetingPoint: string;
-  createdBy: string;
-  coordinates: Coordinates;
-  typeOfActivity: string;
-  aboutActivity: string;
-  spots: string;
-  telegramLink: string;
-  UserActivityParticipations: string[];
 }
 
 const CardsForActivity: React.FC<CardsForActivityProps> = ({
@@ -152,7 +137,6 @@ const CardsForActivity: React.FC<CardsForActivityProps> = ({
       onClose(null);
     }
   };
-
   const joinActivity = () => {
     const participantsData = {
       userId: String(uid || ""),
@@ -215,14 +199,6 @@ const CardsForActivity: React.FC<CardsForActivityProps> = ({
     return <EditActivity handleClose={handleClose} activity={activity} />;
   }
   return (
-    // <div
-    // className='card'
-    // style={{
-    //   height: "300px",
-    //   width: "400px",
-    //   backgroundColor: "transparent",
-    // }}
-    // >
     <div className='card'>
       <div className='button-section'>
         <MDBBtn className='delete-button' onClick={handleClose}>
@@ -312,7 +288,6 @@ const CardsForActivity: React.FC<CardsForActivityProps> = ({
         )}
       </div>
     </div>
-    // </div>
   );
 };
 

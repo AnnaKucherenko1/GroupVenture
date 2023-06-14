@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
 import "./Map.css";
 
-import { GoogleMap, Marker, StandaloneSearchBox } from "@react-google-maps/api";
+import { GoogleMap, Marker } from "@react-google-maps/api";
 
 export interface Coordinates {
   lat: number | null;
@@ -18,12 +17,10 @@ interface MapProps {
 
 export default function Map({
   markers,
-  selectedMarker,
   onMarkerClick,
   onMapClick,
   center,
 }: MapProps) {
-  // const [selectedMarker, setSelectedMarker] = useState<Coordinates | null>(null);
   const mapContainerStyle = {
     marginTop: "30px",
     width: "100%",
@@ -53,9 +50,6 @@ export default function Map({
       />
     ));
   };
-  // useEffect(() => {
-  //   setSelectedMarker(selectedMarker);
-  // }, [selectedMarker]);
 
   return (
     <div className='mainbodyforMap'>
@@ -65,7 +59,6 @@ export default function Map({
           mapContainerStyle={mapContainerStyle}
           center={center || centerCoordinates}
           zoom={11}
-          // onClick={onMapClick ? onMapClick : () => {}}
         >
           {renderMarkers()}
         </GoogleMap>

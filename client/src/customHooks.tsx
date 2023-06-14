@@ -13,8 +13,3 @@ export const useCookies = (cookieName: string): string => {
 export const useUID = () => {
   return parseInt(localStorage.getItem("uid") || "0");
 };
-
-// export const useLogout = () => {
-//   document.cookie = `sid=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
-//   localStorage.removeItem("uid");
-// }

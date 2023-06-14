@@ -9,7 +9,6 @@ import {
 import { ChangeEvent, FormEvent, useState } from "react";
 import { ActivityInterface } from "../../pages/AddActivityPage/AddActivityPage";
 import "./EditActivity.css";
-import { background, color } from "@chakra-ui/react";
 import { updateActivity } from "../../Services/serviceActivity";
 
 export default function EditActivity({ handleClose, activity }: any) {

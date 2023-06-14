@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useMemo, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import Map, { Coordinates } from "../../components/Map/Map";
 import AddActivity from "../../components/AddActivity/AddActivity";
 import "./Home.css";
@@ -66,10 +66,12 @@ export default function Home() {
   const loadMarkers = async () => {
     try {
       const activities = await getActivities();
-      console.log(activities, "act");
       const filteredActivities = activities.data.filter(
         (activity: ActivityInterface) => {
-          if (formData.date && activity.date !== formData.date) {
+          if (
+            formData.date &&
+            activity.date.substring(0, 10) !== formData.date
+          ) {
             return false;
           }
           if (
@@ -78,11 +80,9 @@ export default function Home() {
           ) {
             return false;
           }
-
           return true;
         }
       );
-      console.log(filteredActivities, "filtred");
       const markers = filteredActivities.map((activity: ActivityInterface) => ({
         lat: activity.coordinates.lat,
         lng: activity.coordinates.lng,
@@ -117,6 +117,7 @@ export default function Home() {
   };
   const handleSubmit = (event: any) => {
     event.preventDefault();
+    console.log(formData.date.substring(0, 10), "here");
     console.log(formData);
     loadMarkers();
     setFormData({
@@ -182,7 +183,6 @@ export default function Home() {
             </div>
 
             <div className='form-group'>
-              {/* <label htmlFor='date'>Date:</label> */}
               <input
                 type='date'
                 id='date'
@@ -192,7 +192,6 @@ export default function Home() {
                 onChange={handleChange}
               />
             </div>
-
             <div className='form-group'>
               <input type='submit' value='Search' className='search-button' />
             </div>
@@ -215,7 +214,6 @@ export default function Home() {
               </div>
             )}
           </div>
-          {/* {JSON.stringify(selectedMarker)} */}
         </div>
         <AddActivity />
       </div>

@@ -4,8 +4,6 @@ const authMiddleware = async (req, res, next) => {
   try {
     const { uid } = req.session;
 
-    console.log("Auth console.logs ", req.session, req.session.uid);
-
     if (!uid) {
       throw new Error("No session uid");
     }

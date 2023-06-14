@@ -1,14 +1,7 @@
-import {
-  MDBCard,
-  MDBCardBody,
-  MDBBtn,
-  MDBInput,
-  MDBTextArea,
-} from "mdb-react-ui-kit";
+import { MDBBtn, MDBInput, MDBTextArea } from "mdb-react-ui-kit";
 import "./Profile.css";
 import { FormDataInterface } from "../Authentication/SignupPage";
-import { useState, ChangeEvent, FormEvent, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useState, ChangeEvent, FormEvent } from "react";
 import { useUID } from "../../customHooks";
 import { updateUser } from "../../Services/serviceUser";
 
@@ -91,116 +84,112 @@ const EditProfile = ({ handleClose, profileUser, handleProfileEdit }: any) => {
       handleClose();
       handleProfileEdit();
     } catch (error) {
-      console.error("Error uploading image to Cloudinary:", error);
+      console.error("Error:", error);
       alert("An error occurred while uploading the image. Please try again.");
     }
   };
 
   return (
     <div className='editProfileContainer'>
-      <MDBCard className='w-20'>
-        <MDBCardBody>
-          <div className='d-flex flex-column justify-content-center h-custom-2 w-75 pt-2'>
-            <form onSubmit={handleSubmit}>
-              <div className='mb-2 mx-5 w-100'>
-                <div>Here you can edit your profile info</div>
-                <div className=' d-flex justify-content-center'>
-                  <div className='profileAvatar'>
-                    {formData.avatar || profileUser?.avatar ? (
-                      <img src={image} />
-                    ) : (
-                      <div className='altTextContainer'>
-                        <div>Choose your profile picture</div>
-                      </div>
-                    )}
-                  </div>
+      <div className='chnageBody'>
+        <div className='d-flex flex-column justify-content-center h-custom-2 w-75 pt-2'>
+          <form onSubmit={handleSubmit}>
+            <div className='mb-2 mx-5 w-100'>
+              <div>Here you can edit your profile info</div>
+              <div className=' d-flex justify-content-center'>
+                <div className='profileAvatar'>
+                  {formData.avatar || profileUser?.avatar ? (
+                    <img src={image} />
+                  ) : (
+                    <div className='altTextContainer'>
+                      <div>Choose your profile picture</div>
+                    </div>
+                  )}
                 </div>
-                <MDBInput
-                  id='avatar'
-                  type='file'
-                  size='lg'
-                  accept='image/*'
-                  onChange={handleChange}
-                />
               </div>
               <MDBInput
-                wrapperClass='mb-2 mx-5 w-100'
-                label='First name'
-                id='firstName'
-                type='text'
+                id='avatar'
+                type='file'
                 size='lg'
-                defaultValue={
-                  formData.firstName || profileUser?.firstName || ""
-                }
+                accept='image/*'
                 onChange={handleChange}
               />
-              <MDBInput
-                wrapperClass='mb-2 mx-5 w-100'
-                label='Last Name'
-                id='lastName'
-                type='text'
-                size='lg'
-                defaultValue={formData.lastName || profileUser?.lastName || ""}
-                onChange={handleChange}
-              />
-              <MDBInput
-                wrapperClass='mb-2 mx-5 w-100'
-                label='Age'
-                id='age'
-                type='number'
-                size='lg'
-                min='0'
-                defaultValue={formData.age || profileUser?.age || ""}
-                onChange={handleChange}
-              />
-              <MDBTextArea
-                wrapperClass='mb-2 mx-5 w-100'
-                label='Info about you'
-                id='infoAboutUser'
-                size='lg'
-                defaultValue={
-                  formData.infoAboutUser || profileUser?.infoAboutUser || ""
-                }
-                onChange={handleChange}
-              />
-              <MDBInput
-                wrapperClass='mb-2 mx-5 w-100'
-                label='Email address'
-                id='email'
-                type='email'
-                size='lg'
-                defaultValue={formData.email || profileUser?.email || ""}
-                onChange={handleChange}
-              />
-              <MDBInput
-                wrapperClass='mb-2 mx-5 w-100'
-                label='Password'
-                id='password'
-                type='password'
-                size='lg'
-                defaultValue={formData.password || profileUser?.password || ""}
-                onChange={handleChange}
-              />
-              <MDBBtn
-                className='mb-2 px-4 mx-5 w-100'
-                color='info'
-                size='lg'
-                type='submit'
-              >
-                Submit Changes
-              </MDBBtn>
-              <MDBBtn
-                className='mb-2 px-4 mx-5 w-100'
-                color='danger'
-                size='lg'
-                onClick={handleClose}
-              >
-                Close
-              </MDBBtn>
-            </form>
-          </div>
-        </MDBCardBody>
-      </MDBCard>
+            </div>
+            <MDBInput
+              wrapperClass='mb-2 mx-5 w-100'
+              label='First name'
+              id='firstName'
+              type='text'
+              size='lg'
+              defaultValue={formData.firstName || profileUser?.firstName || ""}
+              onChange={handleChange}
+            />
+            <MDBInput
+              wrapperClass='mb-2 mx-5 w-100'
+              label='Last Name'
+              id='lastName'
+              type='text'
+              size='lg'
+              defaultValue={formData.lastName || profileUser?.lastName || ""}
+              onChange={handleChange}
+            />
+            <MDBInput
+              wrapperClass='mb-2 mx-5 w-100'
+              label='Age'
+              id='age'
+              type='number'
+              size='lg'
+              min='0'
+              defaultValue={formData.age || profileUser?.age || ""}
+              onChange={handleChange}
+            />
+            <MDBTextArea
+              wrapperClass='mb-2 mx-5 w-100'
+              label='Info about you'
+              id='infoAboutUser'
+              size='lg'
+              defaultValue={
+                formData.infoAboutUser || profileUser?.infoAboutUser || ""
+              }
+              onChange={handleChange}
+            />
+            <MDBInput
+              wrapperClass='mb-2 mx-5 w-100'
+              label='Email address'
+              id='email'
+              type='email'
+              size='lg'
+              defaultValue={formData.email || profileUser?.email || ""}
+              onChange={handleChange}
+            />
+            <MDBInput
+              wrapperClass='mb-2 mx-5 w-100'
+              label='Password'
+              id='password'
+              type='password'
+              size='lg'
+              defaultValue={formData.password || profileUser?.password || ""}
+              onChange={handleChange}
+            />
+            <MDBBtn
+              className='mb-2 px-4 mx-5 w-100'
+              color='info'
+              size='lg'
+              type='submit'
+            >
+              Submit Changes
+            </MDBBtn>
+            <MDBBtn
+              className='mb-2 px-4 mx-5 w-100'
+              color='danger'
+              size='lg'
+              onClick={handleClose}
+            >
+              Close
+            </MDBBtn>
+          </form>
+        </div>
+      </div>
     </div>
   );
 };

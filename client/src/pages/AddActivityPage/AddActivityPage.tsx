@@ -4,7 +4,6 @@ import React, {
   useState,
   useRef,
   useEffect,
-  useContext,
 } from "react";
 import Map, { Coordinates } from "../../components/Map/Map";
 import {

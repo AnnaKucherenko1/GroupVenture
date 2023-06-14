@@ -25,9 +25,7 @@
   display: flex;
   align-items: center;
 }
-/* .created-by span {
 
-} */
 .created-by span:hover {
   text-decoration: underline;
 }
@@ -38,7 +36,6 @@
 }
 
 .button-section button {
-  /* background-color: #007bff; */
   color: #fff;
   border: none;
   padding: 8px 16px;

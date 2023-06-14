@@ -1,6 +1,6 @@
 import React, { ChangeEvent, FormEvent, useContext } from "react";
 import "./Profile.css";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { getUserById } from "../../Services/serviceUser";
 import { useState, useEffect } from "react";
 import AddActivity from "../../components/AddActivity/AddActivity";

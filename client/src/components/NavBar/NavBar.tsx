@@ -1,15 +1,13 @@
 import "./NavBar.css";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useUID } from "../../customHooks";
 
 export default function NavBar() {
   const uid = useUID();
-  console.log("NavBar", uid);
   const [showLogin, setShowLogin] = useState<boolean>(uid ? false : true);
 
   useEffect(() => {
-    console.log("uid has changed");
     if (uid) {
       setShowLogin(false);
     } else {

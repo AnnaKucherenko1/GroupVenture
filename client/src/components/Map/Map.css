@@ -1,16 +1,13 @@
 .map {
-    height: 90%;
-    width: 100%; 
-    /* padding-top: 30px; */
-     display: flex;
-    justify-content: center;  
-     margin-top: 10px; 
+  height: 90%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
 }
 .mainbodyforMap {
-
-    height: 100%;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }

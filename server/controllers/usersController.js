@@ -5,22 +5,29 @@ const bcrypt = require("bcrypt");
 exports.postUser = async (req, res) => {
   const { avatar, firstName, lastName, age, password, email, infoAboutUser } =
     req.body;
+  const user = await User.findOne({ where: { email: email } });
+  if (user)
+    return res
+      .status(409)
+      .send({ error: "409", message: "User already exists" });
   try {
+    if (password === "") throw new Error();
+    const hash = await bcrypt.hash(password, 10);
     const user = await User.create({
       avatar,
       firstName,
       lastName,
       age,
-      password,
+      password: hash,
       email,
       infoAboutUser,
     });
     let safeUser = {
-      avatar: data.avatar,
-      firstName: data.firstName,
-      lastName: data.lastName,
-      age: data.age,
-      infoAboutUser: data.infoAboutUser,
+      avatar: user.avatar,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      age: user.age,
+      infoAboutUser: user.infoAboutUser,
     };
 
     res.status(201).json({
@@ -49,13 +56,12 @@ exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ where: { email: email } });
+    const validatedPass = await bcrypt.compare(password, user.password);
 
-    if (password !== user.password) {
-      throw new Error();
+    if (!validatedPass) {
+      throw new Error("incorrect password");
     }
-
     req.session.uid = user.id;
-    console.log("req.session ==> ", req.session);
     res.send({ success: true, data: user.id, message: "OK" }).status(200);
   } catch (error) {
     console.log(error);

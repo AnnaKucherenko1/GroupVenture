@@ -1,10 +1,4 @@
-import React, {
-  ChangeEvent,
-  FormEvent,
-  createRef,
-  useState,
-  RefObject,
-} from "react";
+import React, { ChangeEvent, FormEvent, useState } from "react";
 import {
   MDBBtn,
   MDBContainer,
@@ -25,11 +19,6 @@ export interface FormDataInterface {
   password: string;
   age: string;
   infoAboutUser: string;
-}
-
-interface AvatarUploadProps {
-  image: string;
-  imageUpload: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
 export default function SignupPage() {
@@ -131,7 +120,7 @@ export default function SignupPage() {
 
       navigate("/login");
     } catch (error) {
-      console.error("Error uploading image to Cloudinary:", error);
+      console.error("Error:", error);
       alert("An error occurred while uploading the image. Please try again.");
     }
   };

@@ -6,7 +6,6 @@ const {
   userActivityController,
 } = require("./controllers/indexController");
 
-// router.get("/events", eventController.getEvents);
 router.post("/addactivity", activityController.postActivity);
 router.post("/signup", usersController.postUser);
 router.post("/login", usersController.login);

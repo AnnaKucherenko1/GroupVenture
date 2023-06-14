@@ -1,4 +1,3 @@
-import { useContext } from "react";
 import { ActivityInterface } from "../pages/AddActivityPage/AddActivityPage";
 
 let root = "http://localhost:3333/";
