@@ -44,8 +44,18 @@ exports.postUser = async (req, res) => {
 exports.getUserInfo = async function (req, res) {
   try {
     let user = await User.findOne({ where: { id: req.params.id } });
-    res.status = 200;
-    res.json(user);
+    if (user) {
+      let safeUser = {
+        id: req.params.id,
+        avatar: user.avatar,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        age: user.age,
+        email: user.email,
+        infoAboutUser: user.infoAboutUser,
+      };
+      res.status(200).json(safeUser);
+    }
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: err.message });
@@ -86,16 +96,19 @@ exports.logout = (req, res) => {
 
 exports.editUser = async function (req, res) {
   const { id, info } = req.body;
-  console.log(req.body);
   try {
-    const rowsAffected = await User.update(info, { where: { id: id } });
-    const usrUpdated = await User.findByPk(id);
-    console.log(usrUpdated);
-    res.status = 200;
-    res.json(usrUpdated);
+    const user = await User.findByPk(id);
+    if (!user) return
+    let userUpdated = {};
+    if (info.password) {
+      const hash = await bcrypt.hash(info.password, 10)
+      userUpdated = await user.update({...req.body.info, password: hash});
+    } else {
+      userUpdated = await user.update(req.body.info);
+    }
+    res.status(200).json(userUpdated);
   } catch (err) {
-    console.log(err);
-    res.status = 500;
-    res.body = err.message;
+    console.error(err);
+    res.status(500).json({ message: err.message });
   }
 };

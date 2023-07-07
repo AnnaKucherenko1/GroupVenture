@@ -6,17 +6,23 @@ const {
   userActivityController,
 } = require("./controllers/indexController");
 
-router.post("/addactivity", activityController.postActivity);
-router.post("/signup", usersController.postUser);
-router.post("/login", usersController.login);
-router.post("/logout", usersController.logout);
-router.post("/activities/join", userActivityController.joinParticipant);
-router.post("/activities/leave", userActivityController.leaveParticipant);
-router.get("/profile/:id", authMiddleware, usersController.getUserInfo);
-router.get("/activities", activityController.getActivities);
+// User
+router.post('/signup', usersController.postUser);
+router.post('/login', usersController.login);
+router.post('/logout', usersController.logout);
+router.get('/profile/:id', usersController.getUserInfo);
+router.get('/profile/:id', authMiddleware, usersController.getUserInfo);
+router.patch('/profile/edit/:id', usersController.editUser);
+
+// Activity
+router.post('/addactivity', activityController.postActivity);
+router.get('/activities', activityController.getActivities);
 router.get('/activity/:id', activityController.getActivityInfo);
-router.delete("/delete/:id", activityController.deleteActivity);
-router.put("/profile/edit/:id", usersController.editUser);
-router.put("/editactivity/:id", activityController.editActivity);
+router.delete('/delete/:id', activityController.deleteActivity);
+router.put('/editactivity/:id', activityController.editActivity);
+
+// User activity
+router.post('/activities/join', userActivityController.joinParticipant);
+router.post('/activities/leave', userActivityController.leaveParticipant);
 
 module.exports = router;
