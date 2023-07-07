@@ -1,5 +1,6 @@
 
-import app from './app';
+const app = require('./app');
+const sequelize = require("./models/modelDB");
 (async () => {
   try {
     await sequelize.sync();

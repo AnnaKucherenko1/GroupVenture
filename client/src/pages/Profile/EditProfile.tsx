@@ -37,6 +37,12 @@ const EditProfile = ({ handleClose, profileUser, handleProfileEdit }: any) => {
       } else {
         _setImage(undefined);
       }
+    } else if (e.target.id === "password" && e.target.value !== '') {
+      const newPassword = e.target.value;
+      setFormData({
+        ...formData,
+        password: newPassword,
+      })
     } else {
       setFormData({
         ...formData,
@@ -47,8 +53,10 @@ const EditProfile = ({ handleClose, profileUser, handleProfileEdit }: any) => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const cloudinaryUrl = "https://api.cloudinary.com/v1_1/dspd8serh/upload";
-    const cloudinaryUploadPreset = "GroupVenture";
+    // const cloudinaryUrl = "https://api.cloudinary.com/v1_1/dspd8serh/upload";
+    // const cloudinaryUploadPreset = "GroupVenture";
+    const cloudinaryUrl = 'https://api.cloudinary.com/v1_1/dpzz6vn2w/upload';
+    const cloudinaryUploadPreset = 'AleCloud';
 
     const formDataToUpload = new FormData();
     formDataToUpload.append("file", formData.avatar || "");
@@ -61,7 +69,7 @@ const EditProfile = ({ handleClose, profileUser, handleProfileEdit }: any) => {
       });
 
       const data = await response.json();
-      console.log(data, "data are here");
+
       const imageUrl = data.url;
 
       const user = {
@@ -69,7 +77,7 @@ const EditProfile = ({ handleClose, profileUser, handleProfileEdit }: any) => {
         firstName: formData.firstName || profileUser.firstName,
         lastName: formData.lastName || profileUser.lastName,
         email: formData.email || profileUser.email,
-        password: formData.password || profileUser.password,
+         password: formData.password,
         age: formData.age || profileUser.age,
         infoAboutUser: formData.infoAboutUser || profileUser.infoAboutUser,
       };
@@ -168,7 +176,6 @@ const EditProfile = ({ handleClose, profileUser, handleProfileEdit }: any) => {
               id='password'
               type='password'
               size='lg'
-              defaultValue={formData.password || profileUser?.password || ""}
               onChange={handleChange}
             />
             <MDBBtn

@@ -1,6 +1,5 @@
 
 const express = require("express");
-const sequelize = require("./models/modelDB");
 const cors = require("cors");
 const router = require("./router");
 const session = require("express-session");
@@ -30,3 +29,4 @@ app.use(
 app.use(cors(corsConfig));
 app.use(express.json());
 app.use("/", router);
+module.exports = app;

@@ -25,7 +25,7 @@ export function getActivities() {
 }
 
 export function getActivityById(id: any) {
-  return fetch(root + id).then((response) => {
+  return fetch(root + 'activity/'  +id).then((response) => {
     if (!response.ok) {
       throw new Error("Activity not found");
     }
