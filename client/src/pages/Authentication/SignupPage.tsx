@@ -76,7 +76,7 @@ export default function SignupPage() {
     }
 
     const cloudinaryUrl = "https://api.cloudinary.com/v1_1/dspd8serh/upload";
-    const cloudinaryUploadPreset = "GroupVenture";
+    const cloudinaryUploadPreset = "GroupVenture"; // update real preset name
 
     const formDataToUpload = new FormData();
     formDataToUpload.append("file", formData.avatar || "");

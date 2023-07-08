@@ -53,10 +53,9 @@ const EditProfile = ({ handleClose, profileUser, handleProfileEdit }: any) => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // const cloudinaryUrl = "https://api.cloudinary.com/v1_1/dspd8serh/upload";
-    // const cloudinaryUploadPreset = "GroupVenture";
-    const cloudinaryUrl = 'https://api.cloudinary.com/v1_1/dpzz6vn2w/upload';
-    const cloudinaryUploadPreset = 'AleCloud';
+    const cloudinaryUrl = "https://api.cloudinary.com/v1_1/dspd8serh/upload";
+    const cloudinaryUploadPreset = "GroupVenture"; // update real preset name
+   
 
     const formDataToUpload = new FormData();
     formDataToUpload.append("file", formData.avatar || "");
