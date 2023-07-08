@@ -1,4 +1,3 @@
-bgdbdbgb
 
 # **GroupVenture** 
 GroupVenture is a versatile and user-friendly app designed to connect individuals with shared interests and facilitate the organization of various activities. Whether you're looking for a hiking partner, a study group, a sports team, or a gaming session, grouVenture provides a platform where users can create, join, and participate in a wide range of activities. Whether you're looking to expand your social circle or pursue new adventures, groupVenture is the go-to app for turning your ideas into memorable group ventures.
