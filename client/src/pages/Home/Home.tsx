@@ -133,15 +133,15 @@ export default function Home() {
 
   return (
     <div
-      className='mainPage'
+      className="mainPage"
       style={{
         backgroundImage: "url(/pexels.jpeg)",
       }}
     >
-      <div className='homePageMain'>
-        <div className='bodyHome'>
-          <form className='search-form' onSubmit={handleSubmit}>
-            <div className='form-group'>
+      <div className="homePageMain">
+        <div className="bodyHome">
+          <form className="search-form" onSubmit={handleSubmit}>
+            <div className="form-group">
               <Autocomplete
                 onPlaceChanged={() => {
                   const selectedPlace = (
@@ -155,48 +155,48 @@ export default function Home() {
                 }}
               >
                 <input
-                  id='meetingPoint'
-                  type='text'
-                  className='form-control'
-                  placeholder='Enter a meeting point'
+                  id="meetingPoint"
+                  type="text"
+                  className="form-control"
+                  placeholder="Enter a meeting point"
                   value={formData.meetingPoint}
                   onChange={handleChange}
                 />
               </Autocomplete>
             </div>
 
-            <div className='form-group'>
+            <div className="form-group">
               <select
-                id='typeOfActivity'
-                className='form-control'
+                id="typeOfActivity"
+                className="form-control"
                 value={formData.typeOfActivity}
                 onChange={handleTypeOfActivityChange}
               >
-                <option value=''>Select an activity type</option>
-                <option value='hiking'>Hiking</option>
-                <option value='trip'>Trip</option>
-                <option value='city activities'>City activities</option>
-                <option value='camping'>Camping</option>
-                <option value='sport activities'>Sport activities</option>
-                <option value='all'>Select all</option>
+                <option value="">Select an activity type</option>
+                <option value="hiking">Hiking</option>
+                <option value="trip">Trip</option>
+                <option value="city activities">City activities</option>
+                <option value="camping">Camping</option>
+                <option value="sport activities">Sport activities</option>
+                <option value="all">Select all</option>
               </select>
             </div>
 
-            <div className='form-group'>
+            <div className="form-group">
               <input
-                type='date'
-                id='date'
-                className='form-control'
-                name='date'
+                type="date"
+                id="date"
+                className="form-control"
+                name="date"
                 value={formData.date}
                 onChange={handleChange}
               />
             </div>
-            <div className='form-group'>
-              <input type='submit' value='Search' className='search-button' />
+            <div className="form-group">
+              <input type="submit" value="Search" className="search-button" />
             </div>
           </form>
-          <div className='mapHomePage'>
+          <div className="mapHomePage">
             <Map
               markers={markers}
               selectedMarker={selectedMarker}
@@ -204,7 +204,7 @@ export default function Home() {
               center={mapCenter as google.maps.LatLngLiteral}
             />
             {uid && (
-              <div className='cardContainer'>
+              <div className="cardContainer">
                 {selectedMarker && (
                   <CardsForActivity
                     marker={selectedMarker}
@@ -215,7 +215,9 @@ export default function Home() {
             )}
           </div>
         </div>
-        <AddActivity />
+        <div style={{ width: "100%" }}>
+          <AddActivity />
+        </div>
       </div>
     </div>
   );

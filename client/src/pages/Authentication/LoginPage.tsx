@@ -18,6 +18,7 @@ export default function LoginPage({ setIsLoggedIn }: any) {
     email: "",
     password: "",
   });
+  const [passwordCorrect, setPasswordCorrect] = useState(true)
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
@@ -34,7 +35,7 @@ export default function LoginPage({ setIsLoggedIn }: any) {
       setIsLoggedIn(true);
       navigate(`/profile/${uid}`);
     } catch (error) {
-      alert("Incorrect email or password");
+      setPasswordCorrect(false);
     }
     setFormData({
       email: "",
@@ -86,7 +87,7 @@ export default function LoginPage({ setIsLoggedIn }: any) {
                   Forgot password?
                 </a>
               </p>
-              <p className='ms-5'>
+              <p className='text ms-5'>
                 Don't have an account?{" "}
                 <a
                   href='#!'

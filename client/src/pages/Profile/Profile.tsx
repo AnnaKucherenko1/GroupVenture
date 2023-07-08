@@ -49,7 +49,7 @@ export default function Profile() {
     };
     return (
       <>
-        <MDBBtn className='mx-2' color='secondary' onClick={handleEditClick}>
+        <MDBBtn className='mx-2' color='success' onClick={handleEditClick}>
           {" "}
           Edit Profile
         </MDBBtn>

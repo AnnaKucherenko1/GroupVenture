@@ -24,8 +24,8 @@ export default function AddActivity() {
           style={{ fontWeight: "bold", fontSize: "20px" }}
         >
           To access detailed information about activities, please log in to your
-          account. <Link to='/login'>Log in</Link> or{" "}
-          <Link to='/signup'>Sign up</Link> to get started.
+          account. <Link to='/login'><span className="span">Log in</span></Link> or{" "}
+          <Link to='/signup'><span className="span">Sign up</span></Link> to get started.
         </p>
       )}
     </div>

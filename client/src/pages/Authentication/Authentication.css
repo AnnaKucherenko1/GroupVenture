@@ -7,6 +7,9 @@
 .signUp {
   padding: 20px;
 }
+.text {
+color: black
+}
 .textDiv {
   display: flex;
   justify-content: center;
