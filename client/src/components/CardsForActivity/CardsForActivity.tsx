@@ -20,25 +20,15 @@ import {
 import { getUserById, getUsersByIds } from "../../Services/serviceUser";
 import { useUID } from "../../customHooks";
 import EditActivity from "../EditActivity/EditActivity";
-export interface Coordinates {
-  lat: number | null;
-  lng: number | null;
-  id?: string;
-}
+import { ActivityInterface, Coordinates, User } from "../../interfaces";
+
 
 interface CardsForActivityProps {
   marker: Coordinates;
   id?: string;
   onClose?: Dispatch<SetStateAction<Coordinates | null>>;
 }
-interface User {
-  avatar: string;
-  firstName: string;
-  lastName: string;
-  age: string;
-  infoAboutUser: string;
-  id: string;
-}
+
 
 const CardsForActivity: React.FC<CardsForActivityProps> = ({
   marker,
@@ -50,7 +40,7 @@ const CardsForActivity: React.FC<CardsForActivityProps> = ({
   const [participants, setParticipants] = useState<User[]>([]);
   const [isUserParticipant, setIsUserParticipant] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  const [activity, setActivity] = useState({
+  const [activity, setActivity] = useState<ActivityInterface>({
     title: "",
     date: "",
     meetingPoint: "",
@@ -79,7 +69,6 @@ const CardsForActivity: React.FC<CardsForActivityProps> = ({
     getActivityById(marker.id)
       .then((activity: any) => {
         if (activity) {
-          console.log(activity);
           setActivity(activity);
           const userIds = [activity.createdBy];
           if (activity.UserActivityParticipations.length > 0) {
@@ -187,9 +176,11 @@ const CardsForActivity: React.FC<CardsForActivityProps> = ({
       });
   };
   const deleteActivity = () => {
-    deleteActivityByID(activity.id).then(() => {
-      handleClose();
-    });
+    if(activity.id)  {
+      deleteActivityByID(activity.id).then(() => {
+        handleClose();
+      });
+    }
   };
   const editActivity = () => {
     setIsEditing(true);
