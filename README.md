@@ -21,7 +21,9 @@ You will also need to add a Google Maps Api Key to the index.html and a Clodinar
 ```console
 npm start 
 ```
-## Screenshots:
+## **Tech stack:** 
+React, TypeScript, Express, PostgreSQL, vanilla CSS, Bootstrap, Google Maps API, Cloudinary. 
+## **Screenshots**:
 Home page
 ![Home page screenshot](./screenshots/homepage.png)
 Log In page
