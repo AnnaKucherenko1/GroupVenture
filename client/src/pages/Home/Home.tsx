@@ -201,19 +201,19 @@ export default function Home() {
               onMarkerClick={handleMarkerClick}
               center={mapCenter as google.maps.LatLngLiteral}
             />
-            {uid && (
+            {!!uid && (
               <div className="cardContainer">
                 {selectedMarker && (
                   <CardsForActivity
                     marker={selectedMarker}
                     onClose={setSelectedMarker}
-                  />
+                 />
                 )}
               </div>
-            )}
+            )} 
           </div>
         </div>
-        <div style={{ width: "100%" }}>
+        <div>
           <AddActivity />
         </div>
       </div>

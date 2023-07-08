@@ -1,11 +1,11 @@
 .mainPage {
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   background-size: cover;
   justify-content: center;
 }
 .bodyHome {
-  width: 60vw;
+  width: 60vw; height: 100%;
   max-height: auto;
   display: flex;
   flex-direction: column;
@@ -19,7 +19,7 @@
 }
 
 .mapHomePage {
-  height: 60%;
+  height: 100%;
 }
 .search-form {
   display: grid;
@@ -65,5 +65,5 @@
 }
 
 .search-button:hover {
-  background-color: #45a049;
+  background-color: #ffa892;
 }

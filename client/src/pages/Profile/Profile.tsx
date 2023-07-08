@@ -49,8 +49,7 @@ export default function Profile() {
     };
     return (
       <>
-        <MDBBtn className='mx-2' color='success' onClick={handleEditClick}>
-          {" "}
+        <MDBBtn className='mx-2 narrower-width' color='danger' active onClick={handleEditClick}>
           Edit Profile
         </MDBBtn>
         <AddActivity />

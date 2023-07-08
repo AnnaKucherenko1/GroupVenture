@@ -17,6 +17,7 @@ import {
 import { Autocomplete } from "@react-google-maps/api";
 import { postActivity } from "../../Services/serviceActivity";
 import { useUID } from "../../customHooks";
+import './AddActivityPage.css'
 
 export interface ActivityInterface {
   id?: string;
@@ -172,11 +173,11 @@ export default function AddActivityPage() {
     <MDBContainer fluid>
       <MDBRow className='justify-content-center'>
         <MDBCol sm='5'>
-          <div className='d-flex flex-column justify-content-center align-items-center mt-5'>
+          <div className='addActivityContainer d-flex flex-column justify-content-center align-items-center mt-5'>
             <h3 className='fw-normal mb-3' style={{ letterSpacing: "1px" }}>
               Add an activity
             </h3>
-            <form onSubmit={handleSubmit} style={{ width: "100%" }}>
+            <form onSubmit={handleSubmit} style={{ width: "100%", height: "100%" }}>
               <MDBInput
                 wrapperClass='mb-4 w-100'
                 label='Title'

@@ -126,7 +126,7 @@ export default function SignupPage() {
   };
 
   return (
-    <MDBContainer fluid>
+    <MDBContainer fluid className="no-scroll-container">
       <MDBRow>
         <MDBCol sm='6'>
           <div className='signUp'>

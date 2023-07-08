@@ -13,9 +13,9 @@ export default function AddActivity() {
   };
 
   return (
-    <div>
+    <div className="homePage">
       {uid ? (
-        <MDBBtn color='info' onClick={handleClick}>
+        <MDBBtn color='info' size='lg' onClick={handleClick}>
           Add an activity
         </MDBBtn>
       ) : (

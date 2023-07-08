@@ -1,6 +1,9 @@
-.forMap{
-    height: 300px;
-    width: 100%;
-    border: 5px solid yellow;
-    margin: 0%;
-  }
+.forMap {
+  height: 100%;
+  width: 100%;
+  margin: 0%;
+}
+
+.addActivityContainer {
+  height: 100%; width: 100%;
+}

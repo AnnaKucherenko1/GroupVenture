@@ -24,7 +24,7 @@ export default function Map({
   const mapContainerStyle = {
     marginTop: "30px",
     width: "100%",
-    height: "500px",
+    height: "100%"
   };
 
   const centerCoordinates = {

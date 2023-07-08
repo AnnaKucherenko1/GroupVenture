@@ -7,6 +7,10 @@
 .signUp {
   padding: 20px;
 }
+.no-scroll-container {
+  height: 92vh;
+  overflow: hidden;
+}
 .text {
 color: black
 }

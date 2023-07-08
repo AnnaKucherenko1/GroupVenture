@@ -6,8 +6,9 @@ GroupVenture is a versatile and user-friendly app designed to connect individual
 ### Clone the repository: [GroupVenture](https://github.com/AnnaKucherenko1/GroupVenture)
 ### Navigate to the client and server folders:
 ```console
-cd server || cd client
+ cd client || cd server
 ```
+
 ### Install the required npm packages on each folder:
 
 ```console
@@ -21,7 +22,7 @@ You will also need to add a Google Maps Api Key to the index.html and a Clodinar
 npm start 
 ```
 ## **Tech stack:** 
-React, TypeScript, Express, PostgreSQL, vanilla CSS, Bootstrap, Google Maps API, Cloudinary. 
+React, TypeScript, Node, Express, PostgreSQL, vanilla CSS, Bootstrap, Google Maps API, Geocoding API, Cloudinary. 
 ## **Screenshots**:
 Home page
 ![Home page screenshot](./screenshots/homepage.png)
