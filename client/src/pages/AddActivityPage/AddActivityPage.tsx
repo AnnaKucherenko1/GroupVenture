@@ -131,13 +131,11 @@ export default function AddActivityPage() {
     });
   };
   const handleMapClick = (event: any) => {
-    console.log("location before geocoder");
+
     const latitude = event.latLng.lat();
     const longitude = event.latLng.lng();
     const location = new google.maps.LatLng(latitude, longitude);
 
-    console.log("location before geocoder");
-    console.log(location);
 
     geocoder.geocode({ location }, (results, status) => {
       if (
@@ -145,7 +143,7 @@ export default function AddActivityPage() {
         results &&
         results.length > 0
       ) {
-        console.log("i am here");
+
         const address = results[0].formatted_address;
 
         setFormData({
@@ -156,8 +154,6 @@ export default function AddActivityPage() {
             lng: location.lng(),
           },
         });
-        console.log("Selected place:", address);
-        console.log("Location:", location.lat(), location.lng());
 
         const marker = new google.maps.Marker({
           position: location,
@@ -171,7 +167,6 @@ export default function AddActivityPage() {
       }
     });
 
-    console.log("Map clicked:", event.latLng.lat(), event.latLng.lng());
   };
   return (
     <MDBContainer fluid>

@@ -66,7 +66,6 @@ exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ where: { email: email } })
-    console.log(password, user)
     const validatedPass = await bcrypt.compare(password, user.password);
 
     if (!validatedPass) {
@@ -98,21 +97,18 @@ exports.logout = (req, res) => {
 exports.editUser = async function (req, res) {
   const { id, info } = req.body;
   try {
-    console.log("hello")
+
     const user = await User.findByPk(id);
     if (!user) return
     let userUpdated = {};
-    console.log(req.body)
     if (info.password) {
       const hash = await bcrypt.hash(info.password, 10)
       console.log(hash);
       userUpdated = await user.update({...req.body.info, password: hash});
-      console.log("JHieffafea ==> ",userUpdated)
       await user.save()
     } else {
       delete req.body.info.password;
-      userUpdated = await user.update({...req.body.info, password: user.password});
-      console.log(userUpdated)
+      userUpdated = await user.update({...req.body.info, password: user.password});   
     }
     res.status(200).json(userUpdated);
   } catch (err) {

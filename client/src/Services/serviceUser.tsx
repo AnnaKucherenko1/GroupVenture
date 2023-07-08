@@ -51,7 +51,6 @@ export function login(user: any) {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(user),
   }).then((res) => {
-    console.log(res);
     if (res.ok) {
       return res.json();
     } else {
@@ -67,7 +66,6 @@ export function logout() {
     mode: "cors",
     headers: { "Content-Type": "application/json" },
   }).then((res) => {
-    console.log(res);
     if (res.ok) {
       return res.json();
     } else {

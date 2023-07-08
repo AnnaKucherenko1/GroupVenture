@@ -113,7 +113,6 @@ exports.getActivityInfo = async function (req, res, next) {
 exports.deleteActivity = async function (req, res) {
   try {
     const id = req.params.id;
-    console.log(id);
     if (!id)
       res.status(400).json({
         success: false,
@@ -130,7 +129,6 @@ exports.deleteActivity = async function (req, res) {
 
 exports.editActivity = async function (req, res) {
   const { id, info } = req.body;
-  console.log(req.body);
   try {
     const rowsAffected = await Activity.update(info, { where: { id: id } });
     const actUpdated = await Activity.findByPk(id);

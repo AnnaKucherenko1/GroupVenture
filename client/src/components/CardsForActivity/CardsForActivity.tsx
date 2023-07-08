@@ -77,19 +77,16 @@ const CardsForActivity: React.FC<CardsForActivityProps> = ({
                 (participation: any) => participation
               );
             userIds.push(...userParticipationIds);
-            console.log(userParticipationIds, "userParticipations");
             getUsersByIds(userIds)
               .then((users: any) => {
                 const creator = users.find(
                   (user: any) => user.id === activity.createdBy
-                );
-                console.log(creator, "this is an creator");
+                )
                 setCreator(creator);
                 const participants = users.filter((user: any) =>
                   userParticipationIds.includes(user.id)
                 );
                 setParticipants(participants);
-                console.log(participants, "par");
                 setOccupiedSpots(participants.length);
                 setIsUserParticipant(
                   participants.some((part: { id: number }) => part.id === uid)

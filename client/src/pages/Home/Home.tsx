@@ -117,8 +117,6 @@ export default function Home() {
   };
   const handleSubmit = (event: any) => {
     event.preventDefault();
-    console.log(formData.date.substring(0, 10), "here");
-    console.log(formData);
     loadMarkers();
     setFormData({
       date: "",

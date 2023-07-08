@@ -28,7 +28,7 @@ export default function Profile() {
         console.error(error);
       });
   }, []);
-  console.log(profileUser, "profile user");
+
 
   useEffect(() => {
     if (uid && profileUser && uid === profileUser.id && !isEditable) {

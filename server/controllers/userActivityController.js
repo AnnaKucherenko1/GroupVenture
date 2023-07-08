@@ -38,7 +38,6 @@ const { UserActivityParticipation } = require("../models/associations");
 exports.joinParticipant = async (req, res, next) => {
   try {
     const { userId, activityId } = req.body;
-    console.log("here");
     if (!userId || !activityId) {
       res.status(404).json({
         success: false,
