@@ -24,6 +24,10 @@ npm start
 ## **Tech stack:** 
 React, TypeScript, Node, Express, PostgreSQL, vanilla CSS, Bootstrap, Google Maps API, Geocoding API, Cloudinary. 
 ## **Screenshots**:
+Home page GIF
+
+![Home page gif](./screenshots/groupVenture.gif)
+
 Home page
 ![Home page screenshot](./screenshots/homepage.png)
 Sign Up page
