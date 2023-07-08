@@ -26,8 +26,6 @@ React, TypeScript, Express, PostgreSQL, vanilla CSS, Bootstrap, Google Maps API,
 ## **Screenshots**:
 Home page
 ![Home page screenshot](./screenshots/homepage.png)
-Log In page
-![Login page screenshot](./screenshots/login.png)
 Sign Up page
 ![Signup page screenshot](./screenshots/signUp.png)
 Profile
@@ -36,3 +34,5 @@ Edit Profile
 ![Edit Profile screenshot](./screenshots/editProfile.png)
 Activity card
 ![Activity card screenshot](./screenshots/activityCard.png)
+## **Made by:** 
+Anna Kucherenko - [Github](https://github.com/AnnaKucherenko1) - [LinkedIn](www.linkedin.com/in/anna-kucherenko1)
