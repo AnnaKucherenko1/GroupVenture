@@ -1,6 +1,7 @@
+import { __prod__ } from "../constants";
 import { FormDataInterface } from "../pages/Authentication/SignupPage";
 
-let root = "http://localhost:3333/";
+let root = __prod__ ? "https://groupventure-server.fly.dev/" : "http://localhost:3333/";
 export const postUser = async (data: FormDataInterface) => {
   const response = await fetch(root + "signup", {
     method: "POST",
