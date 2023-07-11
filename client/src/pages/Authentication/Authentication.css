@@ -9,7 +9,7 @@
 }
 .no-scroll-container {
   height: 92vh;
-  overflow: hidden;
+  overflow-y: hidden;
 }
 .text {
 color: black
@@ -54,4 +54,16 @@ color: black
   display: flex;
   justify-content: center;
   align-items: center;
+}
+@media (max-width: 700px) {
+  .textDiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: rgba(240, 248, 255, 0.679);
+    width: 90%;
+    border-radius: 15px;
+    margin: 20px;
+  }
 }

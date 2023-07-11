@@ -53,8 +53,8 @@ const EditProfile = ({ handleClose, profileUser, handleProfileEdit }: any) => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const cloudinaryUrl = "https://api.cloudinary.com/v1_1/dspd8serh/upload";
-    const cloudinaryUploadPreset = "GroupVenture"; // update real preset name
+    const cloudinaryUrl = process.env.CLOUDINARY_URL as string;
+    const cloudinaryUploadPreset = process.env.CLOUDINARY_NAME as string; 
    
 
     const formDataToUpload = new FormData();

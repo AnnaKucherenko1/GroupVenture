@@ -4,14 +4,16 @@
   background-size: cover;
   justify-content: center;
 }
+
 .bodyHome {
-  width: 60vw; height: 100%;
-  max-height: auto;
+  width: 60vw;
+  height: 100%;
   display: flex;
   flex-direction: column;
   padding: 20px;
   margin-top: 10px;
 }
+
 .homePageMain {
   display: flex;
   align-items: center;
@@ -21,11 +23,12 @@
 .mapHomePage {
   height: 100%;
 }
+
 .search-form {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 2rem;
-  height: 80px;
+  height: auto; /* Adjust height to allow it to adapt to content */
   margin-top: 10px;
   border-radius: 10px;
   background-color: rgba(255, 255, 255, 0.334);
@@ -42,6 +45,7 @@
   width: 100%;
   height: 100%;
 }
+
 .cardContainer {
   position: absolute;
   top: 50%;
@@ -66,4 +70,48 @@
 
 .search-button:hover {
   background-color: #ffa892;
+}
+
+@media (max-width: 700px) {
+  .mainPage {
+    width: 110%;
+    padding: 5px;
+    background-size: cover;
+    justify-content: center;
+  }
+
+  .bodyHome {
+    width: 100vw;
+    padding: 20px;
+    margin-top: 10px;
+  }
+
+  .search-form {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Adjust to desired number of columns */
+    grid-template-rows: auto auto; /* Add grid rows for the form */
+    gap: 1rem;
+    padding: 10px;
+    padding-top: 15px;
+  }
+
+  .form-group:nth-child(1) {
+    grid-column: 1 / span 2; /* Span across two columns */
+  }
+
+  .form-group:nth-child(2) {
+    grid-column: 1; /* Place in first column */
+  }
+
+  .form-group:nth-child(3) {
+    grid-column: 2; /* Place in second column */
+  }
+
+  .form-group:nth-child(4) {
+    grid-column: 1 / span 2; /* Span across two columns */
+  }
+
+  .search-button-container {
+    grid-column: 1 / span 2; /* Span across two columns */
+  }
 }

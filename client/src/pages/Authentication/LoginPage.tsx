@@ -47,7 +47,7 @@ export default function LoginPage({ setIsLoggedIn }: any) {
   };
 
   return (
-    <MDBContainer fluid>
+    <MDBContainer fluid className="no-scroll-container">
       <MDBRow>
         <MDBCol sm="6">
           <div className="login">

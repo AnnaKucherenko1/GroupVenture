@@ -75,8 +75,8 @@ export default function SignupPage() {
       return;
     }
 
-    const cloudinaryUrl = "https://api.cloudinary.com/v1_1/dspd8serh/upload";
-    const cloudinaryUploadPreset = "GroupVenture"; // update real preset name
+    const cloudinaryUrl = process.env.CLOUDINARY_URL as string;
+    const cloudinaryUploadPreset = process.env.CLOUDINARY_NAME as string; 
 
     const formDataToUpload = new FormData();
     formDataToUpload.append("file", formData.avatar || "");
@@ -126,7 +126,7 @@ export default function SignupPage() {
   };
 
   return (
-    <MDBContainer fluid className="no-scroll-container">
+    <MDBContainer fluid >
       <MDBRow>
         <MDBCol sm='6'>
           <div className='signUp'>

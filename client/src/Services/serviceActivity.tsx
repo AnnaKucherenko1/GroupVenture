@@ -1,8 +1,10 @@
 import { ActivityInterface } from "../pages/AddActivityPage/AddActivityPage";
 
-let root = "http://localhost:3333/";
+import { __prod__ } from "../constants";
+
+let root = __prod__ ? "https://groupventure-server.fly.dev/" : "http://localhost:3333/";
 export const postActivity = async (data: ActivityInterface, user: any) => {
-  // const userId = localStorage.getItem("userId");
+
   const withId = Object.assign({ createdBy: user }, data);
   const response = await fetch(root + "addactivity", {
     method: "POST",

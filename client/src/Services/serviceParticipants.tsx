@@ -1,4 +1,6 @@
-let root = "http://localhost:3333/";
+import { __prod__ } from "../constants";
+
+let root = __prod__ ? "https://groupventure-server.fly.dev/" : "http://localhost:3333/";
 
 export const updateUserActivity = function (participantsData: {
   userId: string;
