@@ -1,4 +1,4 @@
-# fly.toml app configuration file generated for groupventure-server on 2023-07-10T18:44:32+02:00
+# fly.toml app configuration file generated for groupventure-server on 2023-07-11T17:52:59+02:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
@@ -7,7 +7,7 @@ app = "groupventure-server"
 primary_region = "mad"
 
 [http_service]
-  internal_port = 3333
+  internal_port = 3000
   force_https = true
   auto_stop_machines = true
   auto_start_machines = true

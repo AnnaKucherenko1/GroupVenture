@@ -4,6 +4,7 @@ const sequelize = require("./models/modelDB");
 (async () => {
   try {
     await sequelize.sync();
+    console.log("Connected to PostgreSQL DB!")
     const port = 3333;
     app.listen(port, () => {
       console.log(`Server listening on port ${port}`);
