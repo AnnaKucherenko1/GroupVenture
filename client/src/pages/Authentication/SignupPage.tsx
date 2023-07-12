@@ -75,21 +75,22 @@ export default function SignupPage() {
       return;
     }
 
-    const cloudinaryUrl = process.env.CLOUDINARY_URL as string;
-    const cloudinaryUploadPreset = process.env.CLOUDINARY_NAME as string; 
+    const cloudinaryUrl = process.env.REACT_APP_CLOUDINARY_URL as string;
+    const cloudinaryUploadPreset = process.env.REACT_APP_CLOUDINARY_NAME as string; 
 
-    const formDataToUpload = new FormData();
-    formDataToUpload.append("file", formData.avatar || "");
-    formDataToUpload.append("upload_preset", cloudinaryUploadPreset);
-
+    
     try {
+
+      const formDataToUpload = new FormData();
+      formDataToUpload.append("file", formData.avatar || "");
+      formDataToUpload.append("upload_preset", cloudinaryUploadPreset);
+      console.log(cloudinaryUrl)
       const response = await fetch(cloudinaryUrl, {
         method: "POST",
         body: formDataToUpload,
-        headers: {
-          "Content-Type": "multipart/form-data",
-        }
       });
+
+    
 
       const data = await response.json();
       const imageUrl = data.url;
