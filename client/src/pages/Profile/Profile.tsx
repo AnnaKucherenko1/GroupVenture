@@ -93,7 +93,13 @@ export default function Profile() {
             <img src={profileUser?.avatar} alt='Avatar' />
           )}
         </div>
-        <div className='infoAboutUser'>{profileUser?.infoAboutUser || ""}</div>
+
+        {!!profileUser?.infoAboutUser && (
+          <div className='infoAboutUser'>{profileUser?.infoAboutUser || ""}</div>
+
+        )
+        
+        }
 
         <CreatedActivities />
         <div className='btns'>{RenderEditables()}</div>

@@ -53,8 +53,9 @@ const EditProfile = ({ handleClose, profileUser, handleProfileEdit }: any) => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const cloudinaryUrl = process.env.CLOUDINARY_URL as string;
-    const cloudinaryUploadPreset = process.env.CLOUDINARY_NAME as string; 
+    const cloudinaryUrl = process.env.REACT_APP_CLOUDINARY_URL as string;
+    const cloudinaryUploadPreset = process.env
+      .REACT_APP_CLOUDINARY_NAME as string;
    
 
     const formDataToUpload = new FormData();

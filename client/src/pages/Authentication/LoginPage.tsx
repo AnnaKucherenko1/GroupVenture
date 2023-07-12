@@ -78,7 +78,7 @@ export default function LoginPage({ setIsLoggedIn }: any) {
                   onChange={handleChange}
                 />
                 {!passwordCorrect && (
-                  <div style={{ color: "red" }}>Incorrect email or password.</div>
+                  <div className="mb-4 mx-5 w-100" style={{ color: "red" }}>Incorrect email or password.</div>
                 )}
                 <MDBBtn className="mb-4 px-5 mx-5 w-100" color="info" size="lg">
                   Login
