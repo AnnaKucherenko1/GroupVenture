@@ -86,6 +86,9 @@ export default function SignupPage() {
       const response = await fetch(cloudinaryUrl, {
         method: "POST",
         body: formDataToUpload,
+        headers: {
+          "Content-Type": "multipart/form-data",
+        }
       });
 
       const data = await response.json();
