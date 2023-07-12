@@ -84,7 +84,6 @@ export default function SignupPage() {
       const formDataToUpload = new FormData();
       formDataToUpload.append("file", formData.avatar || "");
       formDataToUpload.append("upload_preset", cloudinaryUploadPreset);
-      console.log(cloudinaryUrl)
       const response = await fetch(cloudinaryUrl, {
         method: "POST",
         body: formDataToUpload,
