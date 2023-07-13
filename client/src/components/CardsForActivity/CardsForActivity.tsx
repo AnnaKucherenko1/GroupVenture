@@ -89,7 +89,7 @@ const CardsForActivity: React.FC<CardsForActivityProps> = ({
                 setParticipants(participants);
                 setOccupiedSpots(participants.length);
                 setIsUserParticipant(
-                  participants.some((part: { id: number }) => part.id === uid)
+                  participants.some((part: { id: string }) => part.id === uid)
                 );
               })
               .catch((error: any) => {
@@ -162,7 +162,7 @@ const CardsForActivity: React.FC<CardsForActivityProps> = ({
       .then((response) => {
         setParticipants((prevParticipants) =>
           prevParticipants.filter(
-            (participant) => parseInt(participant.id) !== uid
+            (participant) => participant.id !== uid
           )
         );
         setIsUserParticipant(false);
@@ -243,7 +243,7 @@ const CardsForActivity: React.FC<CardsForActivityProps> = ({
         )}
       </div>
       <div className='button-section'>
-        {uid !== parseInt(creator.id) && (
+        {uid !== creator.id && (
           <>
             {isUserParticipant ? (
               <MDBBtn color='danger' onClick={leaveActivity}>
@@ -256,7 +256,7 @@ const CardsForActivity: React.FC<CardsForActivityProps> = ({
             )}
           </>
         )}
-        {uid === parseInt(creator.id) && (
+        {uid === creator.id && (
           <div className='btns'>
             <MDBBtn
               className='me-2 width-btn'

@@ -75,7 +75,7 @@ export function logout() {
   });
 }
 
-export function updateUser(id: number, info: any) {
+export function updateUser(id: string, info: any) {
   return fetch(root + "profile/edit/" + id, {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },

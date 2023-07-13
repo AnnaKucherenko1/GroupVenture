@@ -11,5 +11,5 @@ export const useCookies = (cookieName: string): string => {
 };
 
 export const useUID = () => {
-  return parseInt(localStorage.getItem("uid") || "0");
+  return localStorage.getItem("uid") || "";
 };

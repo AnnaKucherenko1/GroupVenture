@@ -66,7 +66,7 @@ export default function SignupPage() {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const hasUppercase = /[A-Z]/.test(formData.password);
-    if (formData.password.length < 8 || !hasUppercase) {
+    if (formData.password.length < 8 || hasUppercase === false) {
       setPassportValidate(false);
     } else {
       setPassportValidate(true)}
@@ -102,28 +102,28 @@ export default function SignupPage() {
       infoAboutUser: formData.infoAboutUser,
     };
     try {
-      const res = await postUser(user);
-      if (res.error) {
-        setUserExist(true);
-      } else {
-        if(passportValidate) {
+      if(!(formData.password.length < 8 || hasUppercase === false)) {
 
-          setFormData({
-            avatar: null,
-            firstName: "",
-            lastName: "",
-            email: "",
-            password: "",
-            age: "",
-            infoAboutUser: "",
-          });
-    
-          const fileInput = document.getElementById("avatar") as HTMLInputElement;
-          if (fileInput) {
-            fileInput.value = "";
-          }
-    
-          navigate("/login");
+        const res = await postUser(user);
+        if (res.error) {
+          setUserExist(true);
+        } else {
+            setFormData({
+              avatar: null,
+              firstName: "",
+              lastName: "",
+              email: "",
+              password: "",
+              age: "",
+              infoAboutUser: "",
+            });
+            const fileInput = document.getElementById("avatar") as HTMLInputElement;
+            if (fileInput) {
+              fileInput.value = "";
+            }
+      
+            navigate("/login");
+          
         }
       }
     } catch (error) {

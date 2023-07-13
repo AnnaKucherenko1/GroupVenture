@@ -8,6 +8,7 @@ import { updateUser } from "../../Services/serviceUser";
 const EditProfile = ({ handleClose, profileUser, handleProfileEdit }: any) => {
   const uid = useUID();
   const [image, _setImage] = useState(profileUser?.avatar);
+  const [imageUrl, setImageUrl] = useState(profileUser?.avatar);
 
   const [formData, setFormData] = useState<FormDataInterface>({
     avatar: null,
@@ -32,6 +33,7 @@ const EditProfile = ({ handleClose, profileUser, handleProfileEdit }: any) => {
         const reader = new FileReader();
         reader.onload = () => {
           _setImage(reader.result as string);
+          setImageUrl(reader.result as string)
         };
         reader.readAsDataURL(file);
       } else {
@@ -61,8 +63,8 @@ const EditProfile = ({ handleClose, profileUser, handleProfileEdit }: any) => {
     const formDataToUpload = new FormData();
     formDataToUpload.append("file", formData.avatar || "");
     formDataToUpload.append("upload_preset", cloudinaryUploadPreset);
-
     try {
+      if(formData.avatar) {
       const response = await fetch(cloudinaryUrl, {
         method: "POST",
         body: formDataToUpload,
@@ -70,7 +72,8 @@ const EditProfile = ({ handleClose, profileUser, handleProfileEdit }: any) => {
 
       const data = await response.json();
 
-      const imageUrl = data.url;
+      setImageUrl(data.url);
+    }
 
       const user = {
         avatar: imageUrl || profileUser.avatar,
