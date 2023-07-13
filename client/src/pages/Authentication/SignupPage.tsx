@@ -68,7 +68,7 @@ export default function SignupPage() {
     const hasUppercase = /[A-Z]/.test(formData.email);
     if (formData.email.length < 8 || !hasUppercase) {
       setPassportValidate(false);
-    }
+    } else (setPassportValidate(true))
 
     const cloudinaryUrl = process.env.REACT_APP_CLOUDINARY_URL as string;
     const cloudinaryUploadPreset = process.env
