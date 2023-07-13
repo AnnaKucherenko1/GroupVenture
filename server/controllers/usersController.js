@@ -12,7 +12,7 @@ exports.postUser = async (req, res) => {
       .send({ error: "409", message: "User already exists" });
   try {
     const hasUppercase = /[A-Z]/.test(password);
-    if (!(password.length < 8 || hasUppercase === false)) throw new Error();
+    if (password.length < 8 || hasUppercase === false) throw new Error();
     const hash = await bcrypt.hash(password, 10);
     const user = await User.create({
       avatar,
