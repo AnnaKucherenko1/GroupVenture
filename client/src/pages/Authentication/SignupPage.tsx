@@ -105,22 +105,25 @@ export default function SignupPage() {
       if (res.error) {
         setUserExist(true);
       } else {
-        setFormData({
-          avatar: null,
-          firstName: "",
-          lastName: "",
-          email: "",
-          password: "",
-          age: "",
-          infoAboutUser: "",
-        });
-  
-        const fileInput = document.getElementById("avatar") as HTMLInputElement;
-        if (fileInput) {
-          fileInput.value = "";
+        if(passportValidate) {
+
+          setFormData({
+            avatar: null,
+            firstName: "",
+            lastName: "",
+            email: "",
+            password: "",
+            age: "",
+            infoAboutUser: "",
+          });
+    
+          const fileInput = document.getElementById("avatar") as HTMLInputElement;
+          if (fileInput) {
+            fileInput.value = "";
+          }
+    
+          navigate("/login");
         }
-  
-        navigate("/login");
       }
     } catch (error) {
       console.log(error);
