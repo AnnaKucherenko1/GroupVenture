@@ -52,7 +52,9 @@ export default function Profile() {
         <MDBBtn className='mx-2 narrower-width' color='danger' active onClick={handleEditClick}>
           Edit Profile
         </MDBBtn>
+        <div className="addact">
         <AddActivity />
+        </div>
       </>
     );
   };

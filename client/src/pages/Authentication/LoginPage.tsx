@@ -108,7 +108,7 @@ export default function LoginPage({ setIsLoggedIn }: any) {
             src="login.jpeg"
             alt="Login image"
             className="w-100"
-            style={{ objectFit: "cover", objectPosition: "left" }}
+            style={{ objectFit: "cover", objectPosition: "left", height: "100%"}}
           />
         </MDBCol>
       </MDBRow>
