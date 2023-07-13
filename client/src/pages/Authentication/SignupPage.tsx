@@ -105,6 +105,7 @@ export default function SignupPage() {
       if(!(formData.password.length < 8 || hasUppercase === false)) {
 
         const res = await postUser(user);
+        console.log(res)
         if (res.error) {
           setUserExist(true);
         } else {

@@ -1,12 +1,11 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("./modelDB");
-const Sequelize = require("sequelize")
 
 const UserActivityParticipation = sequelize.define(
   "UserActivityParticipation",
   {
     userId: {
-      type: Sequelize.UUID,
+      type: DataTypes.STRING,
       allowNull: false,
     },
     activityId: {

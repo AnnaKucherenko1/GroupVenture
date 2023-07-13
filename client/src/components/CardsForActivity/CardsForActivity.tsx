@@ -125,7 +125,7 @@ const CardsForActivity: React.FC<CardsForActivityProps> = ({
   };
   const joinActivity = () => {
     const participantsData = {
-      userId: String(uid || ""),
+      userId: uid || "",
       activityId: parseInt(marker.id || ""),
     };
 
@@ -154,7 +154,7 @@ const CardsForActivity: React.FC<CardsForActivityProps> = ({
   };
   const leaveActivity = () => {
     const participantsData = {
-      userId: String(uid || ""),
+      userId: uid || "",
       activityId: parseInt(marker.id || ""),
     };
 
