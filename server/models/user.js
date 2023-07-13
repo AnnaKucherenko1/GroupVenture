@@ -1,7 +1,14 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("./modelDB");
+const Sequelize = require("sequelize")
 
 const User = sequelize.define("User", {
+  id: {
+    type: Sequelize.UUID,
+    defaultValue: Sequelize.UUIDV4,
+    allowNull: false,
+    primaryKey: true 
+  },
   avatar: {
     type: DataTypes.STRING,
     allowNull: true,

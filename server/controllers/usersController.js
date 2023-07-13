@@ -11,7 +11,8 @@ exports.postUser = async (req, res) => {
       .status(409)
       .send({ error: "409", message: "User already exists" });
   try {
-    if (password === "") throw new Error();
+    const hasUppercase = /[A-Z]/.test(password);
+    if (!(password.length < 8 || hasUppercase === false)) throw new Error();
     const hash = await bcrypt.hash(password, 10);
     const user = await User.create({
       avatar,

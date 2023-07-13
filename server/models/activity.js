@@ -1,5 +1,6 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("./modelDB");
+const Sequelize = require("sequelize")
 
 const Activity = sequelize.define("Activity", {
   title: {
@@ -7,7 +8,7 @@ const Activity = sequelize.define("Activity", {
     allowNull: false,
   },
   createdBy: {
-    type: DataTypes.INTEGER,
+    type: Sequelize.UUID,
     allowNull: false,
   },
   date: {
