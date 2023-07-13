@@ -65,8 +65,8 @@ export default function SignupPage() {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const hasUppercase = /[A-Z]/.test(formData.email);
-    if (formData.email.length < 8 || !hasUppercase) {
+    const hasUppercase = /[A-Z]/.test(formData.password);
+    if (formData.password.length < 8 || !hasUppercase) {
       setPassportValidate(false);
     } else (setPassportValidate(true))
 
