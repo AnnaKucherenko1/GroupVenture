@@ -22,7 +22,7 @@ You will also need to add a Google Maps Api Key to the index.html and a Clodinar
 npm start 
 ```
 ## **Tech stack:** 
-React, TypeScript, Node, Express, PostgreSQL, vanilla CSS, Bootstrap, Google Maps API, Geocoding API, Cloudinary. 
+React, TypeScript, Redis, Node, Express, PostgreSQL, vanilla CSS, Bootstrap, Google Maps API, Geocoding API, Cloudinary. 
 ## **Screenshots**:
 Home page GIF
 
