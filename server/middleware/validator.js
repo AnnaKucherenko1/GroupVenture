@@ -97,7 +97,10 @@ exports.editActivityRequestValidator = [
     .withMessage("Title is required")
     .isString()
     .withMessage("Property should be a string"),
-  body("info.date").exists().isISO8601().withMessage("Invalid date format received"),
+  body("info.date")
+    .exists()
+    .isISO8601()
+    .withMessage("Invalid date format received"),
   body("info.meetingPoint")
     .exists()
     .notEmpty()
@@ -163,8 +166,13 @@ exports.joinAndLeaveActivityRequestValidator = [
 exports.createUserRequestValidator = [
   body("avatar")
     .optional()
-    .isString()
-    .withMessage("Property should be a string"),
+    .custom((value) => {
+      if (value !== null && typeof value !== "string") {
+        throw new Error("Property should be a string or null");
+      }
+      return true;
+    })
+    .withMessage("Property should be a string or null"),
   body("infoAboutUser")
     .optional()
     .isString()
@@ -223,31 +231,36 @@ exports.updateUserRequestValidator = [
     .withMessage("id is required")
     .isString()
     .withMessage("Property should be a string"),
-  body("avatar")
+  body("info.avatar")
+    .optional()
+    .custom((value) => {
+      if (value !== null && typeof value !== "string") {
+        throw new Error("Property should be a string or null");
+      }
+      return true;
+    })
+    .withMessage("Property should be a string or null"),
+  body("info.infoAboutUser")
     .optional()
     .isString()
     .withMessage("Property should be a string"),
-  body("infoAboutUser")
+  body("info.firstName")
     .optional()
     .isString()
     .withMessage("Property should be a string"),
-  body("firstName")
+  body("info.lastName")
     .optional()
     .isString()
     .withMessage("Property should be a string"),
-  body("lastName")
+  body("info.age")
+    .optional()
+    .isInt()
+    .withMessage("Property should be a number"),
+  body("info.password")
     .optional()
     .isString()
     .withMessage("Property should be a string"),
-  body("age")
-    .optional()
-    .isString()
-    .withMessage("Property should be a string"),
-  body("password")
-    .optional()
-    .isString()
-    .withMessage("Property should be a string"),
-  body("email")
+  body("info.email")
     .optional()
     .isString()
     .withMessage("Property should be a string"),

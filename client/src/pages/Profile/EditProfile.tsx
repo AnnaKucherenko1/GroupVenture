@@ -80,7 +80,7 @@ const EditProfile = ({ handleClose, profileUser, handleProfileEdit }: any) => {
         firstName: formData.firstName || profileUser.firstName,
         lastName: formData.lastName || profileUser.lastName,
         email: formData.email || profileUser.email,
-         password: formData.password,
+        password: formData.password,
         age: formData.age || profileUser.age,
         infoAboutUser: formData.infoAboutUser || profileUser.infoAboutUser,
       };
