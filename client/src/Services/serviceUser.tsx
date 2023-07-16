@@ -28,6 +28,7 @@ export function getUserById(id: any) {
   });
 }
 export function getUsersByIds(ids: any[]) {
+  // TODO: Create an endpoint that will accept multiple user ids and fetch in one call
   const promises = ids.map((id) => {
     return fetch(root + "profile/" + id, {
       method: "GET",

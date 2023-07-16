@@ -19,7 +19,14 @@ export default function Profile() {
 
   useEffect(() => {
     getUserById(id)
-      .then((user: any) => {
+      .then((result: any) => {
+
+        if (!result.success) {
+          alert("Failed to fetch user details, contact support.");
+          return;
+        }
+
+        const user = result.data;
         if (user) {
           setProfileUser(user);
         }

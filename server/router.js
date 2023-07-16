@@ -23,13 +23,11 @@ router.post(
 );
 router.post("/logout", usersController.logout);
 router.get("/profile/:id", usersController.getUserInfo);
-router.get("/profile/:id", authMiddleware, usersController.getUserInfo);
 router.patch("/profile/edit", usersController.editUser);
 
 // Activity
 router.post(
   "/addactivity",
-  authMiddleware,
   postActivityRequestValidator,
   requestValidationMiddleware,
   activityController.postActivity
