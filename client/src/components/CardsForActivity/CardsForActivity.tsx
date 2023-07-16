@@ -57,7 +57,6 @@ const CardsForActivity: React.FC<CardsForActivityProps> = ({
             );
           userIds.push(...userParticipationIds);
           
-          setParticipants(participants);
           getUsersByIds(userIds)
             .then((result: any) => {
               const mappedResults = result.map((res: any) => res.data);
@@ -65,6 +64,8 @@ const CardsForActivity: React.FC<CardsForActivityProps> = ({
               const creator = mappedResults.find(
                 (result: any) => result.id === fetchedActivity.createdBy
               );
+              const otherParticipants = mappedResults.filter((participant: any) => participant.id !== fetchedActivity.createdBy);
+              setParticipants(otherParticipants);
               setCreator(creator);
 
               setOccupiedSpots(userParticipationIds.length);
@@ -174,7 +175,7 @@ const CardsForActivity: React.FC<CardsForActivityProps> = ({
   if (isEditing) {
     return <EditActivity handleClose={handleClose} activity={activity} />;
   }
-  
+
   return (
     <div className="card">
       <div className="button-section">
