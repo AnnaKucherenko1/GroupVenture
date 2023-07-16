@@ -67,7 +67,9 @@ const CardsForActivity: React.FC<CardsForActivityProps> = ({
   });
   useEffect(() => {
     getActivityById(marker.id)
-      .then((activity: any) => {
+      .then((response: any) => {
+        // TODO: If not response.success show error toast
+        const activity = response.data;
         if (activity) {
           setActivity(activity);
           const userIds = [activity.createdBy];

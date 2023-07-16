@@ -3,14 +3,16 @@ const { User } = require("../models/associations");
 const bcrypt = require("bcrypt");
 
 exports.postUser = async (req, res) => {
-  const { avatar, firstName, lastName, age, password, email, infoAboutUser } =
-    req.body;
-  const user = await User.findOne({ where: { email: email } });
-  if (user)
-    return res
-      .status(409)
-      .send({ error: "409", message: "User already exists" });
   try {
+    const { avatar, infoAboutUser, firstName, lastName, age, password, email } =
+      req.body;
+
+    const userA = await User.findOne({ where: { email: email } });
+    if (userA)
+      return res
+        .status(409)
+        .send({ error: "409", message: "User already exists" });
+
     const hasUppercase = /[A-Z]/.test(password);
     if (password.length < 8 || hasUppercase === false) throw new Error();
     const hash = await bcrypt.hash(password, 10);
@@ -66,7 +68,7 @@ exports.getUserInfo = async function (req, res) {
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const user = await User.findOne({ where: { email: email } })
+    const user = await User.findOne({ where: { email: email } });
     const validatedPass = await bcrypt.compare(password, user.password);
 
     if (!validatedPass) {
@@ -98,18 +100,20 @@ exports.logout = (req, res) => {
 exports.editUser = async function (req, res) {
   const { id, info } = req.body;
   try {
-
     const user = await User.findByPk(id);
-    if (!user) return
+    if (!user) return;
     let userUpdated = {};
     if (info.password) {
-      const hash = await bcrypt.hash(info.password, 10)
+      const hash = await bcrypt.hash(info.password, 10);
       console.log(hash);
-      userUpdated = await user.update({...req.body.info, password: hash});
-      await user.save()
+      userUpdated = await user.update({ ...req.body.info, password: hash });
+      await user.save();
     } else {
       delete req.body.info.password;
-      userUpdated = await user.update({...req.body.info, password: user.password});   
+      userUpdated = await user.update({
+        ...req.body.info,
+        password: user.password,
+      });
     }
     res.status(200).json(userUpdated);
   } catch (err) {

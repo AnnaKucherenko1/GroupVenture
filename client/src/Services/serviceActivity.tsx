@@ -3,7 +3,8 @@ import { ActivityInterface } from "../pages/AddActivityPage/AddActivityPage";
 import { __prod__ } from "../constants";
 
 let root = __prod__ ? "https://groupventure-server.fly.dev/" : "http://localhost:3333/";
-export const postActivity = async (data: ActivityInterface, user: any) => {
+
+export const postActivity = async (data: ActivityInterface, user: string) => {
 
   const withId = Object.assign({ createdBy: user }, data);
   const response = await fetch(root + "addactivity", {
@@ -41,7 +42,7 @@ export function deleteActivityByID(id: string) {
 }
 
 export function updateActivity(id: string, info: any) {
-  return fetch(root + "editactivity/" + id, {
+  return fetch(root + "editactivity", {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ id, info }),

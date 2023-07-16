@@ -47,7 +47,7 @@ export default function EditActivity({ handleClose, activity }: any) {
       spots: formData.spots || activity.spots,
       telegramLink: formData.telegramLink || activity.telegramLink,
     };
-    const activityUpdated = updateActivity(activity.id, newActivity);
+    updateActivity(activity.id, newActivity);
     handleClose();
     setFormData({
       title: "",

@@ -109,6 +109,9 @@ export default function AddActivityPage() {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     postActivity(formData, uid);
+
+    // TODO: Check result and add error toast on error or success message otherwise
+    
     setFormData({
       title: "",
       date: "",
