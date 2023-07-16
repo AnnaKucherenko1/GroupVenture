@@ -131,7 +131,7 @@ exports.deleteActivity = async function (req, res) {
       );
     }
 
-    const activity = await Activity.destroy({ where: { id: id } });
+    const activity = await Activity.destroy({ where: { id: activityId } });
     return responseHandler(res, 200, true, activity, `Activity info fetched`);
   } catch (err) {
     console.log(err);

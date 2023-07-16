@@ -138,8 +138,8 @@ exports.editActivityRequestValidator = [
     .exists()
     .notEmpty()
     .withMessage("Number of spots is required")
-    .isString()
-    .withMessage("Property should be a string"),
+    .isInt()
+    .withMessage("Property should be a number"),
   body("info.telegramLink")
     .exists()
     .notEmpty()

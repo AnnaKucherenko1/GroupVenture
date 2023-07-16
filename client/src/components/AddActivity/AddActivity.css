@@ -5,6 +5,7 @@ p {
 .testBlock {
 background-color: rgba(0, 0, 0, 0.364);
 border-radius: 7px;
+margin: 0, 3%, 3%, 0;
 }
 .span {
     color: aquamarine;

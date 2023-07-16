@@ -24,3 +24,8 @@ export interface Coordinates {
     infoAboutUser: string;
     id: string;
   }
+  export interface APIResponse<T> {
+    success: boolean, 
+    data: T, 
+    message: string
+  }
