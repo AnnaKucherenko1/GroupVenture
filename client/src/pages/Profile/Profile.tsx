@@ -18,7 +18,7 @@ export default function Profile() {
   const [profileEdited, setProfileEdited] = useState<boolean>(false);
 
   useEffect(() => {
-    getUserById(id)
+    getUserById(id as string)
       .then((result: any) => {
 
         if (!result.success) {
@@ -75,7 +75,7 @@ export default function Profile() {
 
   useEffect(() => {
     if (profileEdited) {
-      getUserById(id)
+      getUserById(id as string)
         .then((user: any) => {
           if (user) {
             setProfileUser(user.data);

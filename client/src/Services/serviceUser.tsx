@@ -2,33 +2,47 @@ import { FormDataInterface } from "../pages/Authentication/SignupPage";
 import { __prod__ } from "../constants";
 
 let root = __prod__ ? "https://groupventure-server.fly.dev/" : "http://localhost:3333/";
-export const postUser = async (data: FormDataInterface) => {
-  const response = await fetch(root + "signup", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
 
-    body: JSON.stringify(data),
-  });
-  return response.json();
+export const postUser = async (data: any): Promise<any> => {
+  try {
+    const response = await fetch(root + "signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      throw new Error("Signup failed");
+    }
+
+    return await response.json();
+  } catch (err: any) {
+    console.error(err.message);
+  }
 };
+export const getUserById = async (id: string): Promise<any> => {
+  try {
+    const response = await fetch(root + "profile/" + id, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      mode: "cors",
+    });
 
-export function getUserById(id: any) {
-  return fetch(root + "profile/" + id, {
-    method: "GET",
-    headers: { "Content-Type": "application/json" },
-    credentials: "include",
-    mode: "cors",
-  }).then((response) => {
     if (!response.ok) {
       throw new Error("User not found");
     }
-    return response.json();
-  });
-}
-export function getUsersByIds(ids: any[]) {
+
+    return await response.json();
+  } catch (err: any) {
+    console.error(err.message);
+  }
+};
+export const getUsersByIds = async (ids: string[]): Promise<any> => {
   // TODO: Create an endpoint that will accept multiple user ids and fetch in one call
+ 
   const promises = ids.map((id) => {
     return fetch(root + "profile/" + id, {
       method: "GET",
@@ -45,47 +59,59 @@ export function getUsersByIds(ids: any[]) {
 
   return Promise.all(promises);
 }
-export function login(user: any) {
-  return fetch(root + `login`, {
-    method: "POST",
-    credentials: "include",
-    mode: "cors",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(user),
-  }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    } else {
-      throw new Error(res.statusText);
-    }
-  });
-}
+export const login = async (user: any): Promise<any> => {
+  try {
+    const response = await fetch(root + `login`, {
+      method: "POST",
+      credentials: "include",
+      mode: "cors",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(user),
+    });
 
-export function logout() {
-  return fetch(root + `logout`, {
-    method: "POST",
-    credentials: "include",
-    mode: "cors",
-    headers: { "Content-Type": "application/json" },
-  }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    } else {
-      throw new Error(res.statusText);
+    if (!response.ok) {
+      throw new Error(response.statusText);
     }
-  });
-}
 
-export function updateUser(id: string, info: any) {
-  return fetch(root + "profile/edit", {
-    method: "PATCH",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ id, info }),
-  }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    } else {
-      throw new Error(res.statusText);
+    return await response.json();
+  } catch (err: any) {
+    console.error(err.message);
+  }
+};
+
+export const logout = async (): Promise<any> => {
+  try {
+    const response = await fetch(root + `logout`, {
+      method: "POST",
+      credentials: "include",
+      mode: "cors",
+      headers: { "Content-Type": "application/json" },
+    });
+
+    if (!response.ok) {
+      throw new Error(response.statusText);
     }
-  });
-}
+
+    return await response.json();
+  } catch (err: any) {
+    console.error(err.message);
+  }
+};
+
+export const updateUser = async (id: string, info: any): Promise<any> => {
+  try {
+    const response = await fetch(root + "profile/edit", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id, info }),
+    });
+
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+
+    return await response.json();
+  }  catch (err: any) {
+    console.error(err.message);
+  }
+};

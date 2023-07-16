@@ -67,42 +67,33 @@
 .chnageBody {
   margin-bottom: 10px;
 }
-/* .narrower-width {
-height: 43px;
-width: 200px;
-} */
+
 
 @media (max-width: 700px) {
   .mainDivForProfile {
     display: flex;
     justify-content: center;
-    width: 100%;
-    height: 100%;
-    /* overflow: auto; */
+    width: 100vw;
+    height: 100vh;
   }
   .profileBody {
-    position: absolute;
     width: 80vw;
     align-items: center;
-    padding: 10%;
+    margin: 5%;
     display: flex;
     flex-direction: column;
     color: black;
   }
   .editProfileContainer {
     width: 90vw;
-    margin: 0%;
+    margin: 0;
     padding-right: 20%;
-    height: 100%;
+    height: 100vh;
   }
-  .addact {
-    position: relative;
-  }
+
   .profileBtns {
     display: flex;
     flex-direction: column;
-    /* width: 40%;
-    margin: 20%; */
     text-align: center;
   }
 }

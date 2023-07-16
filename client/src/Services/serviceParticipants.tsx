@@ -2,40 +2,48 @@ import { __prod__ } from "../constants";
 
 let root = __prod__ ? "https://groupventure-server.fly.dev/" : "http://localhost:3333/";
 
-export const updateUserActivity = function (participantsData: {
+export const updateUserActivity = async (participantsData: {
   userId: string;
   activityId: number;
-}) {
-  return fetch(root + "activities/join", {
-    method: "POST",
-    credentials: "include",
-    mode: "cors",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(participantsData),
-  }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    } else {
-      throw new Error(res.statusText);
+}): Promise<any> => {
+  try {
+    const response = await fetch(root + "activities/join", {
+      method: "POST",
+      credentials: "include",
+      mode: "cors",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(participantsData),
+    });
+
+    if (!response.ok) {
+      throw new Error(response.statusText);
     }
-  });
+
+    return await response.json();
+  } catch (err: any) {
+    console.error(err.message);
+  }
 };
 
-export const updateUserActivityLeave = function (participantsData: {
+export const updateUserActivityLeave = async (participantsData: {
   userId: string;
   activityId: number;
-}) {
-  return fetch(root + "activities/leave", {
-    method: "POST",
-    credentials: "include",
-    mode: "cors",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(participantsData),
-  }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    } else {
-      throw new Error(res.statusText);
+}): Promise<any> => {
+  try {
+    const response = await fetch(root + "activities/leave", {
+      method: "POST",
+      credentials: "include",
+      mode: "cors",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(participantsData),
+    });
+
+    if (!response.ok) {
+      throw new Error(response.statusText);
     }
-  });
+
+    return await response.json();
+  } catch (err: any) {
+    console.error(err.message);
+  }
 };
