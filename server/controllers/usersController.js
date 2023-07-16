@@ -1,18 +1,25 @@
 const { User } = require("../models/associations");
-
 const bcrypt = require("bcrypt");
+const { validatePassword } = require("../helpers/user");
+const { responseHandler } = require("../helpers/common");
 
 exports.postUser = async (req, res) => {
-  const { avatar, firstName, lastName, age, password, email, infoAboutUser } =
-    req.body;
-  const user = await User.findOne({ where: { email: email } });
-  if (user)
-    return res
-      .status(409)
-      .send({ error: "409", message: "User already exists" });
   try {
-    const hasUppercase = /[A-Z]/.test(password);
-    if (password.length < 8 || hasUppercase === false) throw new Error();
+    const { avatar, infoAboutUser, firstName, lastName, age, password, email } =
+      req.body;
+
+    const isValidPassword = validatePassword(password);
+
+    if (!isValidPassword) {
+      return responseHandler(
+        res,
+        400,
+        false,
+        null,
+        `Password does not meet the requirements`
+      );
+    }
+
     const hash = await bcrypt.hash(password, 10);
     const user = await User.create({
       avatar,
@@ -23,7 +30,7 @@ exports.postUser = async (req, res) => {
       email,
       infoAboutUser,
     });
-    let safeUser = {
+    const savedUser = {
       avatar: user.avatar,
       firstName: user.firstName,
       lastName: user.lastName,
@@ -31,89 +38,162 @@ exports.postUser = async (req, res) => {
       infoAboutUser: user.infoAboutUser,
     };
 
-    res.status(201).json({
-      success: true,
-      data: safeUser,
-      message: "created",
-    });
+    return responseHandler(
+      res,
+      200,
+      true,
+      savedUser,
+      `User has been created`
+    );
   } catch (err) {
-    console.log(err);
-    res.status(500).json({ message: err.message });
+    console.error(`Create user failed: ${err.message}`);
+    if (err.name === "SequelizeUniqueConstraintError") {
+      return responseHandler(res, 400, false, null, "User with this email already exists");
+    } else {
+      return responseHandler(res, 500, false, null);
+    }
   }
 };
 
 exports.getUserInfo = async function (req, res) {
   try {
-    let user = await User.findOne({ where: { id: req.params.id } });
-    if (user) {
-      let safeUser = {
-        id: user.id,
-        avatar: user.avatar,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        age: user.age,
-        email: user.email,
-        infoAboutUser: user.infoAboutUser,
-      };
-      res.status(200).json(safeUser);
+    const userId = req.params.id;
+
+    if (!userId) {
+      return responseHandler(
+        res,
+        400,
+        false,
+        null,
+        "UserId missing in the request query."
+      );
     }
+
+    const user = await User.findOne({ where: { id: userId } });
+
+    if (!user) {
+      return responseHandler(
+        res,
+        404,
+        false,
+        null,
+        `User not found`
+      );
+    }
+    const safeUserInfo = {
+      id: user.id,
+      avatar: user.avatar,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      age: user.age,
+      email: user.email,
+      infoAboutUser: user.infoAboutUser,
+    };
+
+    return responseHandler(
+      res,
+      200,
+      true,
+      safeUserInfo,
+      `User fetched`
+    );
   } catch (err) {
-    console.log(err);
-    res.status(500).json({ message: err.message });
+    console.error(`Get user info failed: ${err.message}`);
+    return responseHandler(res, 500, false, null);
   }
 };
 
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const user = await User.findOne({ where: { email: email } })
-    const validatedPass = await bcrypt.compare(password, user.password);
 
-    if (!validatedPass) {
-      throw new Error("incorrect password");
+    const user = await User.findOne({ where: { email: email } });
+    const validatedPassword = await bcrypt.compare(password, user.password);
+
+    if (!validatedPassword) {
+      return responseHandler(
+        res,
+        401,
+        false,
+        null,
+        `Email or password is incorrect`
+      );
     }
+
     req.session.uid = user.id;
-    res.send({ success: true, data: user.id, message: "OK" }).status(200);
-  } catch (error) {
-    console.log(error);
-    res
-      .status(401)
-      .send({ error: "401", message: "Username or password is incorrect" });
+    return responseHandler(
+      res,
+      200,
+      true,
+      user.id,
+      `User logged in`
+    );
+  } catch (err) {
+    console.error(`User log in failed: ${err.message}`);
+    return responseHandler(res, 500, false, null);
   }
 };
 
 exports.logout = (req, res) => {
-  req.session.destroy((error) => {
-    if (error) {
-      res
-        .status(500)
-        .send({ error, message: "Could not log out, please try again" });
-    } else {
-      res.clearCookie("sid");
-      res.status(200).send({ message: "Logout successful" });
-    }
-  });
+  try {
+    req.session.destroy((error) => {
+      if (error) {
+        throw new Error(`Session destroy failed: ${error.message}`)
+      } else {
+        res.clearCookie("sid");
+        return responseHandler(
+          res,
+          200,
+          true,
+          null,
+          `Logout successful`
+        );
+      }
+    });
+  } catch(err) {
+    console.error(`User log out failed: ${err.message}`);
+    return responseHandler(res, 500, false, null, "Could not log out, please try again.");
+  }
 };
 
 exports.editUser = async function (req, res) {
-  const { id, info } = req.body;
   try {
+    const { id, info } = req.body;
 
     const user = await User.findByPk(id);
-    if (!user) return
+    if (!user) {
+      return responseHandler(
+        res,
+        404,
+        false,
+        null,
+        `User not found`
+      );
+    }
+
     let userUpdated = {};
     if (info.password) {
-      const hash = await bcrypt.hash(info.password, 10)
-      console.log(hash);
-      userUpdated = await user.update({...req.body.info, password: hash});
-      await user.save()
+      const hash = await bcrypt.hash(info.password, 10);
+      userUpdated = await user.update({ ...req.body.info, password: hash });
+      await user.save();
     } else {
       delete req.body.info.password;
-      userUpdated = await user.update({...req.body.info, password: user.password});   
+      userUpdated = await user.update({
+        ...req.body.info,
+        password: user.password,
+      });
+      await user.save();
     }
-    res.status(200).json(userUpdated);
+
+    return responseHandler(
+      res,
+      200,
+      true,
+      userUpdated,
+      `User has been updated`
+    );
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: err.message });
+    console.error(`User log out failed: ${err.message}`);
+    return responseHandler(res, 500, false, null);
   }
 };

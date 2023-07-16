@@ -28,6 +28,7 @@ export function getUserById(id: any) {
   });
 }
 export function getUsersByIds(ids: any[]) {
+  // TODO: Create an endpoint that will accept multiple user ids and fetch in one call
   const promises = ids.map((id) => {
     return fetch(root + "profile/" + id, {
       method: "GET",
@@ -76,7 +77,7 @@ export function logout() {
 }
 
 export function updateUser(id: string, info: any) {
-  return fetch(root + "profile/edit/" + id, {
+  return fetch(root + "profile/edit", {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ id, info }),

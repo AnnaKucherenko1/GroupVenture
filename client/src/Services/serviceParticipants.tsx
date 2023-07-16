@@ -12,6 +12,12 @@ export const updateUserActivity = function (participantsData: {
     mode: "cors",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(participantsData),
+  }).then((res) => {
+    if (res.ok) {
+      return res.json();
+    } else {
+      throw new Error(res.statusText);
+    }
   });
 };
 
@@ -25,5 +31,11 @@ export const updateUserActivityLeave = function (participantsData: {
     mode: "cors",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(participantsData),
+  }).then((res) => {
+    if (res.ok) {
+      return res.json();
+    } else {
+      throw new Error(res.statusText);
+    }
   });
 };

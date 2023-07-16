@@ -10,21 +10,10 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import { ActivityInterface } from "../../pages/AddActivityPage/AddActivityPage";
 import "./EditActivity.css";
 import { updateActivity } from "../../Services/serviceActivity";
+import { FORM_DATA_INIT_VALUE } from "../../constants";
 
 export default function EditActivity({ handleClose, activity }: any) {
-  const [formData, setFormData] = useState<ActivityInterface>({
-    title: "",
-    date: "",
-    meetingPoint: "",
-    coordinates: {
-      lat: null,
-      lng: null,
-    },
-    typeOfActivity: "",
-    aboutActivity: "",
-    spots: "",
-    telegramLink: "",
-  });
+  const [formData, setFormData] = useState<ActivityInterface>(FORM_DATA_INIT_VALUE);
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -47,7 +36,7 @@ export default function EditActivity({ handleClose, activity }: any) {
       spots: formData.spots || activity.spots,
       telegramLink: formData.telegramLink || activity.telegramLink,
     };
-    const activityUpdated = updateActivity(activity.id, newActivity);
+    updateActivity(activity.id, newActivity);
     handleClose();
     setFormData({
       title: "",

@@ -2,20 +2,23 @@ const {
   Activity,
   UserActivityParticipation,
 } = require("../models/associations");
+const { responseHandler } = require("../helpers/common");
+const { processActivities, processActivity } = require("../helpers/activities");
 
 exports.postActivity = async (req, res) => {
-  const {
-    title,
-    date,
-    meetingPoint,
-    coordinates,
-    typeOfActivity,
-    aboutActivity,
-    spots,
-    telegramLink,
-    createdBy,
-  } = req.body;
   try {
+    const {
+      title,
+      date,
+      meetingPoint,
+      coordinates,
+      typeOfActivity,
+      aboutActivity,
+      spots,
+      telegramLink,
+      createdBy,
+    } = req.body;
+
     const activity = await Activity.create({
       title,
       date,
@@ -27,10 +30,11 @@ exports.postActivity = async (req, res) => {
       telegramLink,
       createdBy,
     });
-    res.status(201).json(activity);
+
+    return responseHandler(res, 200, true, activity, "Activity has been added");
   } catch (err) {
     console.log(err);
-    res.status(500).json({ message: err.message });
+    return responseHandler(res, 500, false, null);
   }
 };
 
@@ -46,37 +50,37 @@ exports.getActivities = async (req, res, next) => {
     });
 
     if (!activities) {
-      res.status(404).json({
-        success: false,
-        data: null,
-        message: "Activities not found.",
-      });
-      return next();
+      return responseHandler(res, 404, false, null, "Activities not found.");
     }
 
-    const processedActivities = activities.map((activity) => {
-      participations = activity.dataValues.UserActivityParticipations.map(
-        (participation) => participation.userId
-      );
+    const processedActivities = processActivities(activities);
 
-      const newActivity = Object.assign({}, activity.dataValues);
-      newActivity.UserActivityParticipations = participations;
-
-      return newActivity;
-    });
-
-    res.status(200).json({
-      success: true,
-      data: processedActivities,
-    });
+    return responseHandler(
+      res,
+      200,
+      true,
+      processedActivities,
+      "Activities were fetched"
+    );
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    console.log(err);
+    return responseHandler(res, 500, false, null);
   }
 };
 
 exports.getActivityInfo = async function (req, res, next) {
   try {
     const activityId = req.params.id;
+
+    if (!activityId) {
+      return responseHandler(
+        res,
+        400,
+        false,
+        null,
+        "ActivityId missing in the request query."
+      );
+    }
 
     const activity = await Activity.findOne({
       where: { id: activityId },
@@ -89,54 +93,73 @@ exports.getActivityInfo = async function (req, res, next) {
     });
 
     if (!activity) {
-      res.status(404).json({
-        success: false,
-        data: null,
-        message: "Activities not found.",
-      });
-      return next();
+      return responseHandler(
+        res,
+        404,
+        false,
+        null,
+        `Activity with id: ${activityId} not found`
+      );
     }
 
-    const participations = activity.dataValues.UserActivityParticipations.map(
-      (participation) => participation.userId
-    );
-    const newActivity = Object.assign({}, activity.dataValues);
-    newActivity.UserActivityParticipations = participations;
+    const newActivity = processActivity(activity);
 
-    res.status(200).json(newActivity);
+    return responseHandler(
+      res,
+      200,
+      true,
+      newActivity,
+      `Activity info fetched`
+    );
   } catch (err) {
     console.log(err);
-    res.status(500).json({ message: err.message });
+    return responseHandler(res, 500, false, null);
   }
 };
 
 exports.deleteActivity = async function (req, res) {
   try {
-    const id = req.params.id;
-    if (!id)
-      res.status(400).json({
-        success: false,
-        data: id,
-        message: "wrong id",
-      });
-    let activity = await Activity.destroy({ where: { id: id } });
-    res.json(activity);
-  } catch (error) {
-    console.log(error);
-    res.status(400).send(error.message);
+    const activityId = req.params.id;
+
+    if (!activityId) {
+      return responseHandler(
+        res,
+        400,
+        false,
+        null,
+        "ActivityId missing in the request query."
+      );
+    }
+
+    const activity = await Activity.destroy({ where: { id: id } });
+    return responseHandler(res, 200, true, activity, `Activity info fetched`);
+  } catch (err) {
+    console.log(err);
+    return responseHandler(res, 500, false, null);
   }
 };
 
 exports.editActivity = async function (req, res) {
-  const { id, info } = req.body;
   try {
-    const rowsAffected = await Activity.update(info, { where: { id: id } });
-    const actUpdated = await Activity.findByPk(id);
-    res.status = 200;
-    res.json(actUpdated);
+    const { id, info } = req.body;
+
+    const [numOfAffectedRows, updatedActivity] = await Activity.update(info, {
+      where: { id: id },
+      returning: true,
+    });
+
+    if (numOfAffectedRows === 0) {
+      return responseHandler(
+        res,
+        404,
+        false,
+        null,
+        `Activity with id: ${id} not found`
+      );
+    }
+    return responseHandler(res, 200, true, updatedActivity[0], `Activity has been updated`);
   } catch (err) {
     console.log(err);
-    res.status = 500;
-    res.body = err.message;
+    return responseHandler(res, 500, false, null);
   }
 };
