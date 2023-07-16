@@ -48,14 +48,17 @@ export default function Profile() {
       setEditing((state) => !state);
     };
     return (
-      <>
-        <MDBBtn className='mx-2 narrower-width' color='danger' active onClick={handleEditClick}>
+      <div className="d-grid gap-2">
+
+        <MDBBtn
+              className='mb-2 px-3 mx-4 py-1 w-96'
+              color='danger'  size='lg' active onClick={handleEditClick}>
           Edit Profile
         </MDBBtn>
-        <div className="addact">
-        <AddActivity />
-        </div>
-      </>
+
+             <AddActivity />
+  
+      </div>
     );
   };
 
@@ -102,7 +105,7 @@ export default function Profile() {
         )
         
         }
-
+        
         <CreatedActivities />
         <div className='btns'>{RenderEditables()}</div>
         {isEditing && (
