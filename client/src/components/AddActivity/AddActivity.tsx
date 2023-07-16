@@ -6,6 +6,7 @@ import { MDBBtn } from "mdb-react-ui-kit";
 export default function AddActivity() {
   const uid = useUID();
   const navigate = useNavigate();
+  
   const handleClick = () => {
     if (uid) {
       navigate("/addactivity");

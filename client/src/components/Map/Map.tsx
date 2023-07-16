@@ -27,6 +27,7 @@ export default function Map({
     height: "100%"
   };
 
+  // TODO: This centers to barcelona, ask user for locartion and use users location
   const centerCoordinates = {
     lat: 41.390205,
     lng: 2.154007,

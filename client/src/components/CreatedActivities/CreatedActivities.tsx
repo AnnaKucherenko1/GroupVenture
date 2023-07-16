@@ -6,11 +6,10 @@ import { useUID } from "../../customHooks";
 import { useParams } from "react-router-dom";
 
 const CreatedActivities = () => {
-  const [createdActivities, setCreatedActivities] = useState<
-    ActivityInterface[]
-  >([]);
+  const [createdActivities, setCreatedActivities] = useState<ActivityInterface[]>([]);
   const uid = useUID();
   const { id } = useParams();
+  
   useEffect(() => {
     const fetchActivities = async () => {
       try {
@@ -48,4 +47,5 @@ const CreatedActivities = () => {
     </>
   );
 };
+
 export default CreatedActivities;

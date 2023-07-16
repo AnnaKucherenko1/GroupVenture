@@ -25,3 +25,17 @@ export const CREATOR_INIT_VALUE = {
   infoAboutUser: "",
   id: "",
 };
+
+export const FORM_DATA_INIT_VALUE = {
+    title: "",
+    date: "",
+    meetingPoint: "",
+    coordinates: {
+      lat: null,
+      lng: null,
+    },
+    typeOfActivity: "",
+    aboutActivity: "",
+    spots: "",
+    telegramLink: "",
+};
