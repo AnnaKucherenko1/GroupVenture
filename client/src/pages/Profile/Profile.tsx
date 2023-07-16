@@ -72,12 +72,13 @@ export default function Profile() {
   const handleProfileEdit = () => {
     setProfileEdited(true);
   };
+
   useEffect(() => {
     if (profileEdited) {
       getUserById(id)
         .then((user: any) => {
           if (user) {
-            setProfileUser(user);
+            setProfileUser(user.data);
             setProfileEdited(false);
           }
         })
