@@ -200,3 +200,55 @@ exports.createUserRequestValidator = [
     .isString()
     .withMessage("Property should be a string"),
 ];
+
+exports.loginRequestValidator = [
+  body("email")
+    .exists()
+    .notEmpty()
+    .withMessage("email is required")
+    .isString()
+    .withMessage("Property should be a string"),
+  body("password")
+    .exists()
+    .notEmpty()
+    .withMessage("password is required")
+    .isString()
+    .withMessage("Property should be a string"),
+];
+
+exports.updateUserRequestValidator = [
+  body("id")
+    .exists()
+    .notEmpty()
+    .withMessage("id is required")
+    .isString()
+    .withMessage("Property should be a string"),
+  body("avatar")
+    .optional()
+    .isString()
+    .withMessage("Property should be a string"),
+  body("infoAboutUser")
+    .optional()
+    .isString()
+    .withMessage("Property should be a string"),
+  body("firstName")
+    .optional()
+    .isString()
+    .withMessage("Property should be a string"),
+  body("lastName")
+    .optional()
+    .isString()
+    .withMessage("Property should be a string"),
+  body("age")
+    .optional()
+    .isString()
+    .withMessage("Property should be a string"),
+  body("password")
+    .optional()
+    .isString()
+    .withMessage("Property should be a string"),
+  body("email")
+    .optional()
+    .isString()
+    .withMessage("Property should be a string"),
+];

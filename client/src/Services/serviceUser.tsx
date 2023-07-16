@@ -76,7 +76,7 @@ export function logout() {
 }
 
 export function updateUser(id: string, info: any) {
-  return fetch(root + "profile/edit/" + id, {
+  return fetch(root + "profile/edit", {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ id, info }),

@@ -1,5 +1,5 @@
 const { UserActivityParticipation } = require("../models/associations");
-
+const { responseHandler } = require("../helpers/common");
 
 exports.joinParticipant = async (req, res, next) => {
   try {

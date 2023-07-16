@@ -10,15 +10,21 @@ const {
   postActivityRequestValidator,
   editActivityRequestValidator,
   joinAndLeaveActivityRequestValidator,
+  loginRequestValidator,
 } = require("./middleware/validator.js");
 
 // User
 router.post("/signup", usersController.postUser);
-router.post("/login", usersController.login);
+router.post(
+  "/login",
+  loginRequestValidator,
+  requestValidationMiddleware,
+  usersController.login
+);
 router.post("/logout", usersController.logout);
 router.get("/profile/:id", usersController.getUserInfo);
 router.get("/profile/:id", authMiddleware, usersController.getUserInfo);
-router.patch("/profile/edit/:id", usersController.editUser);
+router.patch("/profile/edit", usersController.editUser);
 
 // Activity
 router.post(
