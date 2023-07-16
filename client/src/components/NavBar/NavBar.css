@@ -25,14 +25,21 @@ li {
 span {
   margin: 3px;
 }
-@media (max-width: 700px) {
+@media (max-width: 900px) {
   .navbar {
-    width: 110%;
+    width: 100%;
     margin: 0;
     height: 8vh;
     background-color: #ffa892;
-    display: flex;
-    justify-content: space-between;
     font-size: 13px;
+  }
+  li {
+    list-style-type: none;
+    margin-top: 15px;
+  }
+  .app-name {
+    display: flex;
+    justify-content: end;
+    margin-top: 15px;
   }
 }

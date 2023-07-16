@@ -13,8 +13,3 @@ border-radius: 7px;
     margin-bottom: 10%;
     width: 100%;
 }
-@media (max-width: 700px) {
-    .btnmy{
-        width: 90vw;
-    } 
-}
