@@ -6,8 +6,8 @@ export const ACTIVITY_INIT_VALUE = {
   meetingPoint: "",
   createdBy: "",
   coordinates: {
-    lat: null,
-    lng: null,
+    lat: 0,
+    lng: 0,
   },
   typeOfActivity: "",
   aboutActivity: "",
@@ -31,8 +31,8 @@ export const FORM_DATA_INIT_VALUE = {
     date: "",
     meetingPoint: "",
     coordinates: {
-      lat: null,
-      lng: null,
+      lat: 0,
+      lng: 0,
     },
     typeOfActivity: "",
     aboutActivity: "",
@@ -62,3 +62,7 @@ export const FORM_USER_INIT_VALUE = {
   age: "",
   infoAboutUser: "",
 }
+export const DEFAULT_CENTER = {
+  lat: 51.541837,
+  lng: -0.139199,
+};

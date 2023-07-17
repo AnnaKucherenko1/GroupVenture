@@ -1,8 +1,8 @@
 import { Dispatch, SetStateAction } from "react";
 
 export interface Coordinates {
-    lat: number | null;
-    lng: number | null;
+    lat: number;
+    lng: number;
     id?: string;
   }
   export interface ActivityInterface {
@@ -43,8 +43,8 @@ export interface Coordinates {
     infoAboutUser: string;
   }
   export interface Coordinates {
-    lat: number | null;
-    lng: number | null;
+    lat: number;
+    lng: number;
   }
   //props
   export interface CardsForActivityProps {

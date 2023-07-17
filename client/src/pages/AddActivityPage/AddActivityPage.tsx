@@ -32,7 +32,29 @@ export default function AddActivityPage() {
     lng: 2.154007,
   });
   const [formData, setFormData] = useState<ActivityInterface>(ACTIVITY_INIT_VALUE);
-
+  const getUserLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const userLocation = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          };
+          setMapCenter(userLocation);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    } else {
+      console.log("Geolocation is not supported by this browser.");
+    }
+  };
+  
+  useEffect(() => {
+    getUserLocation();
+  }, []);
+  
   useEffect(() => {
     if (
       formData.coordinates.lng === null &&

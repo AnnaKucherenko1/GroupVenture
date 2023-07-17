@@ -1,7 +1,9 @@
+import { useEffect, useState } from "react";
 import { Coordinates, MapProps } from "../../interfaces";
 import "./Map.css";
 
 import { GoogleMap, Marker } from "@react-google-maps/api";
+import { DEFAULT_CENTER } from "../../constants";
 
 
 export default function Map({
@@ -15,12 +17,24 @@ export default function Map({
     width: "100%",
     height: "100%"
   };
-
-  // TODO: This centers to barcelona, ask user for locartion and use users location
-  const centerCoordinates = {
-    lat: 41.390205,
-    lng: 2.154007,
-  };
+  const [userLocation, setUserLocation] = useState<Coordinates>();
+  useEffect(() => {
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setUserLocation({
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          });
+        },
+        (error) => {
+          console.error("Error retrieving user location:", error);
+        }
+      );
+    } else {
+      console.error("Geolocation is not supported by this browser.");
+    }
+  }, []);
 
   const handleMarkerClick = (marker: Coordinates) => {
     if (onMarkerClick) {
@@ -40,14 +54,22 @@ export default function Map({
       />
     ));
   };
-
+  let mapCenter: google.maps.LatLng | undefined;
+  if (userLocation) {
+    const { lat, lng } = userLocation;
+    if (lat !== 0 && lng !== 0) {
+      mapCenter = new google.maps.LatLng(lat, lng);
+    }
+  } else {
+    mapCenter = new google.maps.LatLng(DEFAULT_CENTER.lat, DEFAULT_CENTER.lng);
+  }
   return (
-    <div className='mainbodyforMap'>
+    <div  id="mapDiv" className='mainbodyforMap'>
       <div className='map'>
         <GoogleMap
           onClick={onMapClick}
           mapContainerStyle={mapContainerStyle}
-          center={center || centerCoordinates}
+          center={center || mapCenter}
           zoom={11}
         >
           {renderMarkers()}
