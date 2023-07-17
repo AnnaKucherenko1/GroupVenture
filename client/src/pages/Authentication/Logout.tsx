@@ -2,8 +2,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../../Services/serviceUser";
 import { MDBBtn } from "mdb-react-ui-kit";
 import "./Authentication.css";
+import { LoggedInProps } from "../../interfaces";
 
-export default function Logout({ setIsLoggedIn }: any) {
+export default function Logout({ setIsLoggedIn }: LoggedInProps) {
   let navigate = useNavigate();
   const handleClick = async () => {
     await logout();

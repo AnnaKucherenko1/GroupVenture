@@ -1,6 +1,4 @@
 import React, {
-  Dispatch,
-  SetStateAction,
   useCallback,
   useEffect,
   useState,
@@ -27,17 +25,12 @@ import { useUID } from "../../customHooks";
 import EditActivity from "../EditActivity/EditActivity";
 import {
   ActivityInterface,
-  Coordinates,
   User,
   APIResponse,
+  CardsForActivityProps,
 } from "../../interfaces";
 import { ACTIVITY_INIT_VALUE, CREATOR_INIT_VALUE } from "../../constants";
 
-interface CardsForActivityProps {
-  marker: Coordinates;
-  id?: string;
-  onClose?: Dispatch<SetStateAction<Coordinates | null>>;
-}
 
 const CardsForActivity: React.FC<CardsForActivityProps> = ({
   marker,
@@ -97,7 +90,7 @@ const CardsForActivity: React.FC<CardsForActivityProps> = ({
       setIsUserParticipant(true);
       setOccupiedSpots((prevSpots) => prevSpots + 1);
       alert(
-        `You just joined an activity created by: ${creator.firstName}, for for further communication use this link ${activity.telegramLink} `
+        `You just joined an activity created by: ${creator.firstName},s for further communication use this link ${activity.telegramLink} `
       );
     },
     [updateUserActivity, setParticipants, setOccupiedSpots, setIsUserParticipant, participants]

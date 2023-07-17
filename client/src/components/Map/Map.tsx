@@ -1,19 +1,8 @@
+import { Coordinates, MapProps } from "../../interfaces";
 import "./Map.css";
 
 import { GoogleMap, Marker } from "@react-google-maps/api";
 
-export interface Coordinates {
-  lat: number | null;
-  lng: number | null;
-}
-
-interface MapProps {
-  markers: Coordinates[];
-  selectedMarker?: Coordinates | null;
-  onMapClick?: (event: google.maps.MouseEvent) => void;
-  onMarkerClick?: (marker: Coordinates, id?: any) => void;
-  center?: google.maps.LatLngLiteral | undefined;
-}
 
 export default function Map({
   markers,

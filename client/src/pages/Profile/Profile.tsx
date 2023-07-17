@@ -8,19 +8,19 @@ import CreatedActivities from "../../components/CreatedActivities/CreatedActivit
 import EditProfile from "./EditProfile";
 import { useUID } from "../../customHooks";
 import { MDBBtn } from "mdb-react-ui-kit";
+import { APIResponse, User } from "../../interfaces";
 
 export default function Profile() {
   const { id } = useParams();
   const uid = useUID();
-  const [profileUser, setProfileUser] = useState<any | null>(null);
+  const [profileUser, setProfileUser] = useState<User | null>(null);
   const [isEditable, setIsEditable] = useState<boolean>(false);
   const [isEditing, setEditing] = useState<boolean>(false);
   const [profileEdited, setProfileEdited] = useState<boolean>(false);
 
   useEffect(() => {
     getUserById(id as string)
-      .then((result: any) => {
-
+      .then((result: APIResponse<User>) => {
         if (!result.success) {
           alert("Failed to fetch user details, contact support.");
           return;
@@ -31,11 +31,10 @@ export default function Profile() {
           setProfileUser(user);
         }
       })
-      .catch((error: any) => {
+      .catch((error: Error) => {
         console.error(error);
       });
   }, []);
-
 
   useEffect(() => {
     if (uid && profileUser && uid === profileUser.id && !isEditable) {
@@ -50,21 +49,22 @@ export default function Profile() {
     if (!isEditable) {
       return null;
     }
-
     const handleEditClick = () => {
       setEditing((state) => !state);
     };
     return (
       <div className="d-grid gap-2">
-
         <MDBBtn
-              className='mb-2 px-3 mx-4 py-1 w-96'
-              color='danger'  size='lg' active onClick={handleEditClick}>
+          className="mb-2 px-3 mx-4 py-1 w-96"
+          color="danger"
+          size="lg"
+          active
+          onClick={handleEditClick}
+        >
           Edit Profile
         </MDBBtn>
 
-             <AddActivity />
-  
+        <AddActivity />
       </div>
     );
   };
@@ -76,46 +76,45 @@ export default function Profile() {
   useEffect(() => {
     if (profileEdited) {
       getUserById(id as string)
-        .then((user: any) => {
+        .then((user: APIResponse<User>) => {
           if (user) {
             setProfileUser(user.data);
             setProfileEdited(false);
           }
         })
-        .catch((error: any) => {
+        .catch((error: Error) => {
           console.error(error);
         });
     }
   }, [profileEdited, id]);
   return (
     <div
-      className='mainDivForProfile'
+      className="mainDivForProfile"
       style={{
         backgroundImage: "url(/pexels.jpeg)",
       }}
     >
-      <div className='profileBody'>
-        <div className='profileName'>
+      <div className="profileBody">
+        <div className="profileName">
           <strong>
             {profileUser?.firstName || ""} {profileUser?.lastName || ""}
           </strong>
         </div>
         {profileUser?.age ? `Age: ${profileUser.age}` : ""}
-        <div className='profileAvatar'>
+        <div className="profileAvatar">
           {profileUser?.avatar && (
-            <img src={profileUser?.avatar} alt='Avatar' />
+            <img src={profileUser?.avatar} alt="Avatar" />
           )}
         </div>
 
         {!!profileUser?.infoAboutUser && (
-          <div className='infoAboutUser'>{profileUser?.infoAboutUser || ""}</div>
+          <div className="infoAboutUser">
+            {profileUser?.infoAboutUser || ""}
+          </div>
+        )}
 
-        )
-        
-        }
-        
         <CreatedActivities />
-        <div className='btns'>{RenderEditables()}</div>
+        <div className="btns">{RenderEditables()}</div>
         {isEditing && (
           <EditProfile
             handleClose={handleClose}

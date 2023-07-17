@@ -1,24 +1,17 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
-import Map, { Coordinates } from "../../components/Map/Map";
+import Map from "../../components/Map/Map";
 import AddActivity from "../../components/AddActivity/AddActivity";
 import "./Home.css";
 import { getActivities } from "../../Services/serviceActivity";
-import { ActivityInterface } from "../AddActivityPage/AddActivityPage";
 import CardsForActivity from "../../components/CardsForActivity/CardsForActivity";
 import { Autocomplete } from "@react-google-maps/api";
 import { useUID } from "../../customHooks";
+import { HOME_DATA_INIT_VALUE } from "../../constants";
+import { ActivityInterface, Coordinates } from "../../interfaces";
 
 export default function Home() {
   const geocoder = new google.maps.Geocoder();
-  const [formData, setFormData] = useState({
-    date: "",
-    coordinates: {
-      lat: 0,
-      lng: 0,
-    },
-    meetingPoint: "",
-    typeOfActivity: "",
-  });
+  const [formData, setFormData] = useState(HOME_DATA_INIT_VALUE);
   const [mapCenter, setMapCenter] = useState<Coordinates>({
     lat: 41.390205,
     lng: 2.154007,
@@ -115,18 +108,10 @@ export default function Home() {
       [e.target.id]: e.target.value,
     });
   };
-  const handleSubmit = (event: any) => {
+  const handleSubmit = (event: React.FormEvent<HTMLElement>) => {
     event.preventDefault();
     loadMarkers();
-    setFormData({
-      date: "",
-      coordinates: {
-        lat: 0,
-        lng: 0,
-      },
-      meetingPoint: "",
-      typeOfActivity: "",
-    });
+    setFormData(HOME_DATA_INIT_VALUE);
   };
 
   return (

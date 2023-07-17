@@ -10,16 +10,9 @@ import {
 import { useNavigate } from "react-router-dom";
 import { postUser } from "../../Services/serviceUser";
 import "./Authentication.css";
+import { FormDataInterface, User } from "../../interfaces";
+import { FORM_USER_INIT_VALUE } from "../../constants";
 
-export interface FormDataInterface {
-  avatar: string | File | null;
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  age: string;
-  infoAboutUser: string;
-}
 
 export default function SignupPage() {
   const navigate = useNavigate();
@@ -27,15 +20,7 @@ export default function SignupPage() {
   const [userExist, setUserExist] = useState(false);
   const [imageUrl, setImageUrl] = useState(null);
   const [image, _setImage] = useState<string | undefined>(undefined);
-  const [formData, setFormData] = useState<FormDataInterface>({
-    avatar: null,
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-    age: "",
-    infoAboutUser: "",
-  });
+  const [formData, setFormData] = useState<FormDataInterface>(FORM_USER_INIT_VALUE);
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -108,15 +93,7 @@ export default function SignupPage() {
         if (res.success === false) {
           setUserExist(true);
         } else {
-            setFormData({
-              avatar: null,
-              firstName: "",
-              lastName: "",
-              email: "",
-              password: "",
-              age: "",
-              infoAboutUser: "",
-            });
+            setFormData(FORM_USER_INIT_VALUE);
             const fileInput = document.getElementById("avatar") as HTMLInputElement;
             if (fileInput) {
               fileInput.value = "";

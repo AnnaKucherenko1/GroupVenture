@@ -39,3 +39,26 @@ export const FORM_DATA_INIT_VALUE = {
     spots: "",
     telegramLink: "",
 };
+export const HOME_DATA_INIT_VALUE = {
+  date: "",
+  coordinates: {
+    lat: 0,
+    lng: 0,
+  },
+  meetingPoint: "",
+  typeOfActivity: "",
+}
+
+export const FORM_LOGIN_INIT_VALUE = {
+  email: "",
+  password: "",
+}
+export const FORM_USER_INIT_VALUE = {
+  avatar: null,
+  firstName: "",
+  lastName: "",
+  email: "",
+  password: "",
+  age: "",
+  infoAboutUser: "",
+}

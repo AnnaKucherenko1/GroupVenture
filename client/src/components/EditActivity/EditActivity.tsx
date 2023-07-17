@@ -7,12 +7,12 @@ import {
   MDBTextArea,
 } from "mdb-react-ui-kit";
 import { ChangeEvent, FormEvent, useState } from "react";
-import { ActivityInterface } from "../../pages/AddActivityPage/AddActivityPage";
 import "./EditActivity.css";
 import { updateActivity } from "../../Services/serviceActivity";
 import { FORM_DATA_INIT_VALUE } from "../../constants";
+import { ActivityInterface, EditActivityProps } from "../../interfaces";
 
-export default function EditActivity({ handleClose, activity }: any) {
+export default function EditActivity({ handleClose, activity }: EditActivityProps) {
   const [formData, setFormData] = useState<ActivityInterface>(FORM_DATA_INIT_VALUE);
 
   const handleChange = (
@@ -36,21 +36,11 @@ export default function EditActivity({ handleClose, activity }: any) {
       spots: formData.spots || activity.spots,
       telegramLink: formData.telegramLink || activity.telegramLink,
     };
-    updateActivity(activity.id, newActivity);
-    handleClose();
-    setFormData({
-      title: "",
-      date: "",
-      meetingPoint: "",
-      coordinates: {
-        lat: null,
-        lng: null,
-      },
-      typeOfActivity: "",
-      aboutActivity: "",
-      spots: "",
-      telegramLink: "",
-    });
+    if(activity.id) {
+      updateActivity(activity.id, newActivity);
+      handleClose();
+      setFormData(FORM_DATA_INIT_VALUE);
+    }
   };
 
   const handleTypeOfActivityChange = (e: ChangeEvent<HTMLSelectElement>) => {

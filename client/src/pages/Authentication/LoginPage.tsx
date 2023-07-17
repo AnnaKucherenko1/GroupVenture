@@ -10,14 +10,13 @@ import { useNavigate } from "react-router-dom";
 import { login } from "../../Services/serviceUser";
 import { useCookies } from "../../customHooks";
 import "./Authentication.css";
+import { FORM_LOGIN_INIT_VALUE } from "../../constants";
+import { LoggedInProps } from "../../interfaces";
 
-export default function LoginPage({ setIsLoggedIn }: any) {
+export default function LoginPage({ setIsLoggedIn }: LoggedInProps) {
   const sessionCookie = useCookies("sid");
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
+  const [formData, setFormData] = useState(FORM_LOGIN_INIT_VALUE);
   const [passwordCorrect, setPasswordCorrect] = useState(true);
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -37,10 +36,7 @@ export default function LoginPage({ setIsLoggedIn }: any) {
     } catch (error) {
       setPasswordCorrect(false);
     }
-    setFormData({
-      email: "",
-      password: "",
-    });
+    setFormData(FORM_LOGIN_INIT_VALUE);
   };
   const handleRegisterClick = () => {
     navigate("/signup");

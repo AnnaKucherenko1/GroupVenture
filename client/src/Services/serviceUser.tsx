@@ -1,9 +1,11 @@
-import { FormDataInterface } from "../pages/Authentication/SignupPage";
 import { __prod__ } from "../constants";
+import { FormDataInterface, User } from "../interfaces";
 
-let root = __prod__ ? "https://groupventure-server.fly.dev/" : "http://localhost:3333/";
+let root = __prod__
+  ? "https://groupventure-server.fly.dev/"
+  : "http://localhost:3333/";
 
-export const postUser = async (data: any): Promise<any> => {
+export const postUser = async (data: FormDataInterface): Promise<any> => {
   try {
     const response = await fetch(root + "signup", {
       method: "POST",
@@ -42,24 +44,28 @@ export const getUserById = async (id: string): Promise<any> => {
 };
 export const getUsersByIds = async (ids: string[]): Promise<any> => {
   // TODO: Create an endpoint that will accept multiple user ids and fetch in one call
- 
-  const promises = ids.map((id) => {
-    return fetch(root + "profile/" + id, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-      mode: "cors",
-    }).then((response) => {
-      if (!response.ok) {
-        throw new Error(`User with ID ${id} not found`);
-      }
-      return response.json();
-    });
-  });
 
-  return Promise.all(promises);
-}
-export const login = async (user: any): Promise<any> => {
+  try {
+    const promises = ids.map((id) => {
+      return fetch(root + "profile/" + id, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        mode: "cors",
+      }).then((response) => {
+        if (!response.ok) {
+          throw new Error(`User with ID ${id} not found`);
+        }
+        return response.json();
+      });
+    });
+
+    return Promise.all(promises);
+  } catch (err: any) {
+    console.error(err.message);
+  }
+};
+export const login = async (user: User): Promise<any> => {
   try {
     const response = await fetch(root + `login`, {
       method: "POST",
@@ -111,7 +117,7 @@ export const updateUser = async (id: string, info: any): Promise<any> => {
     }
 
     return await response.json();
-  }  catch (err: any) {
+  } catch (err: any) {
     console.error(err.message);
   }
 };

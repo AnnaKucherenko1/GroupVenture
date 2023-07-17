@@ -1,7 +1,7 @@
-import { ActivityInterface } from "../pages/AddActivityPage/AddActivityPage";
+
 
 import { __prod__ } from "../constants";
-import { APIResponse } from "../interfaces";
+import { APIResponse, ActivityInterface } from "../interfaces";
 
 let root = __prod__ ? "https://groupventure-server.fly.dev/" : "http://localhost:3333/";
 

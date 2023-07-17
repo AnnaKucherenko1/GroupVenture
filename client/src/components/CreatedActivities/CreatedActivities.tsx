@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { getActivities } from "../../Services/serviceActivity";
 import "./CreatedActivities.css";
-import { ActivityInterface } from "../../pages/AddActivityPage/AddActivityPage";
 import { useUID } from "../../customHooks";
 import { useParams } from "react-router-dom";
+import { ActivityInterface } from "../../interfaces";
 
 const CreatedActivities = () => {
   const [createdActivities, setCreatedActivities] = useState<ActivityInterface[]>([]);
@@ -15,7 +15,7 @@ const CreatedActivities = () => {
       try {
         const activities = await getActivities();
         const filteredActivities = activities.data.filter(
-          (activity: any) => activity.createdBy == id
+          (activity: ActivityInterface) => activity.createdBy == id
         );
 
         setCreatedActivities(filteredActivities);
@@ -33,7 +33,7 @@ const CreatedActivities = () => {
         <div className='createdActv'>
           <div className='created-activities-title'> Created activities:</div>
           <div className='activity-list'>
-            {createdActivities.map((activity: any, index: number) => (
+            {createdActivities.map((activity: ActivityInterface, index: number) => (
               <div key={activity.id}>
                 <span>
                   {activity.title}

@@ -5,7 +5,7 @@ import React, {
   useRef,
   useEffect,
 } from "react";
-import Map, { Coordinates } from "../../components/Map/Map";
+import Map from "../../components/Map/Map";
 import {
   MDBBtn,
   MDBContainer,
@@ -18,18 +18,8 @@ import { Autocomplete } from "@react-google-maps/api";
 import { postActivity } from "../../Services/serviceActivity";
 import { useUID } from "../../customHooks";
 import './AddActivityPage.css'
-
-export interface ActivityInterface {
-  id?: string;
-  title: string;
-  date: string;
-  meetingPoint: string;
-  coordinates: Coordinates;
-  typeOfActivity: string;
-  aboutActivity: string;
-  spots: string;
-  telegramLink: string;
-}
+import { ActivityInterface, Coordinates } from "../../interfaces";
+import { ACTIVITY_INIT_VALUE } from "../../constants";
 
 export default function AddActivityPage() {
   const uid = useUID();
@@ -41,19 +31,7 @@ export default function AddActivityPage() {
     lat: 41.390205,
     lng: 2.154007,
   });
-  const [formData, setFormData] = useState<ActivityInterface>({
-    title: "",
-    date: "",
-    meetingPoint: "",
-    coordinates: {
-      lat: null,
-      lng: null,
-    },
-    typeOfActivity: "",
-    aboutActivity: "",
-    spots: "",
-    telegramLink: "",
-  });
+  const [formData, setFormData] = useState<ActivityInterface>(ACTIVITY_INIT_VALUE);
 
   useEffect(() => {
     if (
@@ -109,22 +87,8 @@ export default function AddActivityPage() {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     postActivity(formData, uid);
-
-    // TODO: Check result and add error toast on error or success message otherwise
     
-    setFormData({
-      title: "",
-      date: "",
-      meetingPoint: "",
-      coordinates: {
-        lat: null,
-        lng: null,
-      },
-      typeOfActivity: "",
-      aboutActivity: "",
-      spots: "",
-      telegramLink: "",
-    });
+    setFormData(ACTIVITY_INIT_VALUE);
   };
   const mapRef = useRef<google.maps.Map | null>(null);
 
@@ -134,42 +98,44 @@ export default function AddActivityPage() {
       typeOfActivity: e.target.value,
     });
   };
-  const handleMapClick = (event: any) => {
+  const handleMapClick = (event: google.maps.MouseEvent) => {
 
-    const latitude = event.latLng.lat();
-    const longitude = event.latLng.lng();
-    const location = new google.maps.LatLng(latitude, longitude);
+    const latitude = event.latLng?.lat();
+    const longitude = event.latLng?.lng();
+    if(latitude && longitude ) {
+      const location = new google.maps.LatLng(latitude, longitude);
+      geocoder.geocode({ location }, (results, status) => {
+        if (
+          status === google.maps.GeocoderStatus.OK &&
+          results &&
+          results.length > 0
+        ) {
+  
+          const address = results[0].formatted_address;
+  
+          setFormData({
+            ...formData,
+            meetingPoint: address,
+            coordinates: {
+              lat: location.lat(),
+              lng: location.lng(),
+            },
+          });
+  
+          const marker = new google.maps.Marker({
+            position: location,
+            map: mapRef.current,
+          });
+        } else {
+          setFormData({
+            ...formData,
+            meetingPoint: `${latitude}, ${longitude}`,
+          });
+        }
+      });
+    }
 
 
-    geocoder.geocode({ location }, (results, status) => {
-      if (
-        status === google.maps.GeocoderStatus.OK &&
-        results &&
-        results.length > 0
-      ) {
-
-        const address = results[0].formatted_address;
-
-        setFormData({
-          ...formData,
-          meetingPoint: address,
-          coordinates: {
-            lat: location.lat(),
-            lng: location.lng(),
-          },
-        });
-
-        const marker = new google.maps.Marker({
-          position: location,
-          map: mapRef.current,
-        });
-      } else {
-        setFormData({
-          ...formData,
-          meetingPoint: `${latitude}, ${longitude}`,
-        });
-      }
-    });
 
   };
   return (

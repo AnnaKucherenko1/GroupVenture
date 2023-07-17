@@ -1,24 +1,17 @@
 import { MDBBtn, MDBInput, MDBTextArea } from "mdb-react-ui-kit";
 import "./Profile.css";
-import { FormDataInterface } from "../Authentication/SignupPage";
 import { useState, ChangeEvent, FormEvent } from "react";
 import { useUID } from "../../customHooks";
 import { updateUser } from "../../Services/serviceUser";
+import { FormDataInterface, EditProfileProps} from "../../interfaces";
+import { FORM_USER_INIT_VALUE } from "../../constants";
 
-const EditProfile = ({ handleClose, profileUser, handleProfileEdit }: any) => {
+const EditProfile = ({ handleClose, profileUser, handleProfileEdit }: EditProfileProps) => {
   const uid = useUID();
   const [image, _setImage] = useState(profileUser?.avatar);
   const [imageUrl, setImageUrl] = useState(profileUser?.avatar);
 
-  const [formData, setFormData] = useState<FormDataInterface>({
-    avatar: null,
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-    age: "",
-    infoAboutUser: "",
-  });
+  const [formData, setFormData] = useState<FormDataInterface>(FORM_USER_INIT_VALUE);
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -37,7 +30,7 @@ const EditProfile = ({ handleClose, profileUser, handleProfileEdit }: any) => {
         };
         reader.readAsDataURL(file);
       } else {
-        _setImage(undefined);
+        _setImage("");
       }
     } else if (e.target.id === "password" && e.target.value !== '') {
       const newPassword = e.target.value;
@@ -76,13 +69,13 @@ const EditProfile = ({ handleClose, profileUser, handleProfileEdit }: any) => {
     }
 
       const user = {
-        avatar: imageUrl || profileUser.avatar,
-        firstName: formData.firstName || profileUser.firstName,
-        lastName: formData.lastName || profileUser.lastName,
-        email: formData.email || profileUser.email,
+        avatar: imageUrl || profileUser?.avatar,
+        firstName: formData.firstName || profileUser?.firstName,
+        lastName: formData.lastName || profileUser?.lastName,
+        email: formData.email || profileUser?.email,
         password: formData.password,
-        age: formData.age || profileUser.age,
-        infoAboutUser: formData.infoAboutUser || profileUser.infoAboutUser,
+        age: formData.age || profileUser?.age,
+        infoAboutUser: formData.infoAboutUser || profileUser?.infoAboutUser,
       };
 
       const userUpdated = await updateUser(uid, user);
