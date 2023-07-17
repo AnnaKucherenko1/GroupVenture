@@ -109,7 +109,6 @@ export default function AddActivityPage() {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     postActivity(formData, uid);
-    
     setFormData(ACTIVITY_INIT_VALUE);
   };
   const mapRef = useRef<google.maps.Map | null>(null);

@@ -14,7 +14,6 @@ export const ACTIVITY_INIT_VALUE = {
   spots: "",
   telegramLink: "",
   UserActivityParticipations: [],
-  id: "",
 };
 
 export const CREATOR_INIT_VALUE = {

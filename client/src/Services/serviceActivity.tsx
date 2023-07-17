@@ -7,7 +7,13 @@ let root = __prod__ ? "https://groupventure-server.fly.dev/" : "http://localhost
 
 export const postActivity = async (data: ActivityInterface, user: string): Promise<any> => {
   try {
-    const withId = Object.assign({ createdBy: user }, data);
+    const copy =  Object.assign(data);
+    if ("createdBy" in data) {
+      delete copy.createdBy;
+    }
+    const withId = Object.assign({ createdBy: user }, copy);
+    console.log("uid: ", user);
+    console.log("withId: ", JSON.stringify(withId));
     const response = await fetch(root + "addactivity", {
       method: "POST",
       headers: {
