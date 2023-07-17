@@ -10,7 +10,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { postUser } from "../../Services/serviceUser";
 import "./Authentication.css";
-import { FormDataInterface, User } from "../../interfaces";
+import { FormDataInterface } from "../../interfaces";
 import { FORM_USER_INIT_VALUE } from "../../constants";
 
 
@@ -18,7 +18,6 @@ export default function SignupPage() {
   const navigate = useNavigate();
   const [passportValidate, setPassportValidate] = useState(true);
   const [userExist, setUserExist] = useState(false);
-  const [imageUrl, setImageUrl] = useState(null);
   const [image, _setImage] = useState<string | undefined>(undefined);
   const [formData, setFormData] = useState<FormDataInterface>(FORM_USER_INIT_VALUE);
 
@@ -59,6 +58,7 @@ export default function SignupPage() {
     const cloudinaryUrl = process.env.REACT_APP_CLOUDINARY_URL as string;
     const cloudinaryUploadPreset = process.env
       .REACT_APP_CLOUDINARY_NAME as string;
+      let imageUrl = null;
     if (formData.avatar) {
       try {
         const formDataToUpload = new FormData();
@@ -70,7 +70,7 @@ export default function SignupPage() {
         });
 
         const data = await response.json();
-        setImageUrl(data.url);
+        imageUrl = data.secure_url;
       } catch (error) {
         console.error("Error:", error);
         alert("An error occurred while uploading the image. Please try again.");

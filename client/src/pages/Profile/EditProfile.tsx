@@ -9,7 +9,6 @@ import { FORM_USER_INIT_VALUE } from "../../constants";
 const EditProfile = ({ handleClose, profileUser, handleProfileEdit }: EditProfileProps) => {
   const uid = useUID();
   const [image, _setImage] = useState(profileUser?.avatar);
-  const [imageUrl, setImageUrl] = useState(profileUser?.avatar);
 
   const [formData, setFormData] = useState<FormDataInterface>(FORM_USER_INIT_VALUE);
 
@@ -25,12 +24,12 @@ const EditProfile = ({ handleClose, profileUser, handleProfileEdit }: EditProfil
       if (file) {
         const reader = new FileReader();
         reader.onload = () => {
-          _setImage(reader.result as string);
-          setImageUrl(reader.result as string)
+          const result = reader.result as string;
+          _setImage(result);
         };
         reader.readAsDataURL(file);
       } else {
-        _setImage("");
+        _setImage(undefined);
       }
     } else if (e.target.id === "password" && e.target.value !== '') {
       const newPassword = e.target.value;
@@ -48,26 +47,22 @@ const EditProfile = ({ handleClose, profileUser, handleProfileEdit }: EditProfil
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const cloudinaryUrl = process.env.REACT_APP_CLOUDINARY_URL as string;
-    const cloudinaryUploadPreset = process.env
-      .REACT_APP_CLOUDINARY_NAME as string;
-   
-
-    const formDataToUpload = new FormData();
-    formDataToUpload.append("file", formData.avatar || "");
-    formDataToUpload.append("upload_preset", cloudinaryUploadPreset);
     try {
-      if(formData.avatar) {
-      const response = await fetch(cloudinaryUrl, {
+      let imageUrl = null;
+      const cloudinaryUrl = process.env.REACT_APP_CLOUDINARY_URL as string;
+      const cloudinaryUploadPreset = process.env
+        .REACT_APP_CLOUDINARY_NAME as string;
+        if(formData.avatar) {
+        const formDataToUpload = new FormData();
+        formDataToUpload.append("file", formData.avatar || "");
+        formDataToUpload.append("upload_preset", cloudinaryUploadPreset);
+        const response = await fetch(cloudinaryUrl, {
         method: "POST",
         body: formDataToUpload,
       });
-
       const data = await response.json();
-
-      setImageUrl(data.url);
+      imageUrl = data.secure_url;
     }
-
       const user = {
         avatar: imageUrl || profileUser?.avatar,
         firstName: formData.firstName || profileUser?.firstName,
